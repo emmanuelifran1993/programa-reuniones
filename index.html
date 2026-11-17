@@ -1,0 +1,1723 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Programa mensual de reuniones</title>
+<style>
+:root{
+  --bg:#eef2f9;
+  --card:#ffffff;
+  --ink:#0f172a;
+  --ink-2:#334155;
+  --muted:#64748b;
+  --faint:#94a3b8;
+  --line:#e2e8f0;
+  --line-soft:#eef2f7;
+  --accent:#2563eb;
+  --snd:#0e7490;
+  --mic:#7c3aed;
+  --plat:#b45309;
+  --aco:#047857;
+  --radius:20px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+  color:var(--ink);
+  background:
+    radial-gradient(1100px 520px at 8% -12%, #e0e7ff 0%, rgba(224,231,255,0) 62%),
+    radial-gradient(900px 480px at 105% -5%, #d7f5e9 0%, rgba(215,245,233,0) 58%),
+    var(--bg);
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+}
+.page{max-width:1240px;margin:0 auto;padding:26px 22px 56px}
+
+/* ---------- Encabezado ---------- */
+.hero{
+  display:flex;justify-content:space-between;align-items:flex-end;
+  gap:22px;flex-wrap:wrap;padding:8px 2px 22px;
+}
+.eyebrow{
+  margin:0 0 8px;font-size:11px;font-weight:700;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--muted);
+}
+.hero h1{margin:0;font-size:30px;line-height:1.12;letter-spacing:-.02em;font-weight:700}
+.hero .tagline{margin:8px 0 0;font-size:14px;color:var(--muted)}
+.hero-tools{display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.weeknav{
+  display:flex;align-items:center;gap:4px;background:#fff;border:1px solid var(--line);
+  border-radius:14px;padding:5px;box-shadow:0 1px 2px rgba(15,23,42,.05);
+}
+.iconbtn{
+  width:34px;height:34px;border:0;border-radius:9px;background:#f1f5f9;color:var(--ink-2);
+  font-size:19px;line-height:1;cursor:pointer;transition:background .15s;flex:0 0 auto;
+}
+.iconbtn:hover{background:#e2e8f0}
+.weekinfo{padding:0 6px;text-align:center;min-width:206px}
+.weeklabel{font-size:13.5px;font-weight:600;color:var(--ink);white-space:nowrap}
+.dateinput{
+  width:100%;border:0;background:transparent;color:var(--muted);
+  font:500 11.5px/1.4 inherit;text-align:center;cursor:pointer;padding:1px 0;color-scheme:light;
+}
+.dateinput::-webkit-calendar-picker-indicator{opacity:.45;cursor:pointer}
+.hero-actions{display:flex;gap:8px}
+
+/* ---------- Botones ---------- */
+.btn{
+  border:0;border-radius:12px;padding:11px 17px;font:600 13.5px/1 inherit;
+  cursor:pointer;transition:transform .06s ease,filter .15s,background .15s,box-shadow .15s;
+  display:inline-flex;align-items:center;gap:8px;
+}
+.btn:active{transform:translateY(1px)}
+.btn.primary{
+  background:linear-gradient(180deg,#3b7bf5,#2158c9);color:#fff;
+  box-shadow:0 10px 20px -10px rgba(37,99,235,.85);
+}
+.btn.primary:hover{filter:brightness(1.06)}
+.btn.ghost{background:#fff;border:1px solid var(--line);color:var(--ink-2)}
+.btn.ghost:hover{background:#f8fafc}
+.btn.tiny{padding:7px 11px;font-size:11.5px;border-radius:9px}
+.btn.wsp{
+  background:linear-gradient(180deg,#25d366,#17954a);color:#fff;
+  box-shadow:0 10px 20px -10px rgba(37,211,102,.9);
+}
+.btn.wsp:hover{filter:brightness(1.05)}
+.btn.wsp svg{width:17px;height:17px;fill:currentColor;flex:0 0 auto}
+
+/* ---------- Layout ---------- */
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 348px;gap:22px;align-items:start}
+.main{min-width:0}
+.side{min-width:0}
+@media (max-width:1020px){
+  .layout{grid-template-columns:1fr}
+  .hero{align-items:flex-start}
+  .hero-tools{align-items:stretch;width:100%}
+  .weeknav{justify-content:space-between}
+  .hero-actions{justify-content:flex-end}
+}
+
+/* ---------- Poster ---------- */
+.poster{
+  background:var(--card);border:1px solid #e7edf6;border-radius:var(--radius);
+  box-shadow:0 22px 48px -24px rgba(15,23,42,.32),0 2px 6px rgba(15,23,42,.04);
+  overflow:hidden;
+}
+.poster-head{
+  background:linear-gradient(135deg,#132238 0%,#1e3a5f 56%,#25507e 100%);
+  color:#fff;padding:25px 32px 23px;position:relative;
+}
+.poster-head::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(520px 160px at 88% 0%,rgba(120,190,255,.22),transparent 70%);
+}
+.p-eyebrow{
+  margin:0 0 6px;font-size:10.5px;font-weight:700;letter-spacing:.2em;
+  text-transform:uppercase;color:#a8c4e2;position:relative;z-index:1;
+}
+.cong-input{
+  position:relative;z-index:1;display:block;width:100%;max-width:100%;
+  border:0;background:transparent;color:#fff;
+  font-family:inherit;font-size:25px;font-weight:650;letter-spacing:-.01em;
+  padding:3px 8px;margin-left:-8px;border-radius:9px;transition:background .15s;
+}
+.cong-input:hover{background:rgba(255,255,255,.08)}
+.cong-input:focus{outline:none;background:rgba(255,255,255,.13)}
+.cong-input::placeholder{color:rgba(255,255,255,.42)}
+.p-week{position:relative;z-index:1;margin:5px 0 0;font-size:14.5px;font-weight:500;color:#bfd4ea}
+.poster-body{padding:22px 26px 20px}
+.table-scroll{overflow-x:auto;margin:0 -4px;padding:0 4px}
+.sched{width:100%;border-collapse:collapse;table-layout:fixed;min-width:620px}
+.sched thead th{
+  padding:11px 6px 12px;border-bottom:1px solid var(--line);
+  font-size:10.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--muted);text-align:center;
+}
+.sched thead th:first-child{text-align:left;padding-left:10px}
+.h-S{color:var(--snd)}
+.h-M{color:var(--mic)}
+.h-P{color:var(--plat)}
+.h-A{color:var(--aco)}
+.sched tbody th,
+.sched tbody td{
+  border-bottom:1px solid var(--line-soft);padding:11px 6px;
+  text-align:center;vertical-align:middle;
+}
+.sched tbody th{text-align:left;padding-left:10px}
+.sched tbody tr.weekrow th{
+  background:#f5f8fc;border-bottom:1px solid #e8eef7;
+  padding:8px 10px;text-align:left;
+  font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#5f7089;
+}
+.dayname{display:block;font-size:16px;font-weight:700;color:var(--ink);letter-spacing:-.01em}
+.daydate{display:block;margin-top:2px;font-size:11.5px;font-weight:500;color:var(--faint)}
+.slot{
+  display:block;width:100%;padding:7px 5px;border:1px solid transparent;border-radius:9px;
+  background:transparent;color:var(--ink);text-align:center;text-align-last:center;
+  font:600 13.5px/1.3 inherit;cursor:pointer;
+  appearance:none;-webkit-appearance:none;text-overflow:ellipsis;
+  transition:background .12s,border-color .12s,box-shadow .12s;
+}
+.slot + .slot{margin-top:2px}
+.slot:hover{background:#f1f5f9;border-color:#e2e8f0}
+.slot:focus{outline:none;background:#fff;border-color:#93c5fd;box-shadow:0 0 0 3px #dbeafe}
+.slot.empty{color:#cbd5e1;font-weight:500}
+.slot.long{font-size:12px;padding-left:2px;padding-right:2px;letter-spacing:-.01em}
+.poster-foot{
+  display:flex;gap:16px;align-items:center;justify-content:space-between;
+  border-top:1px solid var(--line-soft);margin:14px -2px 0;padding:12px 2px 0;
+  flex-wrap:wrap;
+}
+.note-input{
+  flex:1 1 240px;min-width:0;border:0;background:transparent;color:var(--ink-2);
+  font:500 12.5px/1.4 inherit;padding:5px 8px;border-radius:8px;
+}
+.note-input::placeholder{color:#b6c2d2}
+.note-input:hover{background:#f8fafc}
+.note-input:focus{outline:none;background:#f8fafc}
+.stamp{font-size:11px;color:var(--faint);white-space:nowrap;flex:0 0 auto}
+
+/* ---------- Paneles ---------- */
+.panel{
+  background:#fff;border:1px solid var(--line);border-radius:18px;padding:19px 20px;
+  box-shadow:0 1px 2px rgba(15,23,42,.04);margin-bottom:16px;
+}
+.panel h3{
+  margin:0 0 14px;font-size:10.5px;font-weight:700;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--muted);
+}
+.field{margin-bottom:14px}
+.field:last-child{margin-bottom:0}
+.field > label{display:block;font-size:12.5px;font-weight:600;color:var(--ink-2);margin-bottom:6px}
+.field select,
+.field input[type=text]{
+  width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;
+  background:#fff;color:var(--ink);font:500 13.5px/1.3 inherit;
+}
+.field select:focus,
+.field input[type=text]:focus{outline:none;border-color:#93c5fd;box-shadow:0 0 0 3px #dbeafe}
+.checkline{
+  display:flex;align-items:center;gap:9px;font-size:12.5px;font-weight:500;color:var(--ink-2);
+  cursor:pointer;padding:2px 0;
+}
+.checkline input{width:15px;height:15px;accent-color:#2563eb;cursor:pointer;margin:0}
+.hint{margin:6px 0 0;font-size:11.5px;line-height:1.45;color:var(--faint)}
+.avail-group + .avail-group{margin-top:12px}
+.avail-group h4,.rgroup h4{
+  margin:0 0 8px;font-size:10.5px;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:#a3b0c2;
+}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{position:relative;display:inline-flex}
+.chip input{position:absolute;opacity:0;width:0;height:0;pointer-events:none}
+.chip span{
+  display:inline-flex;align-items:center;gap:5px;padding:6px 11px;
+  border:1px solid var(--line);border-radius:999px;background:#fff;
+  font-size:12.5px;font-weight:500;color:#94a3b8;cursor:pointer;
+  text-decoration:line-through;text-decoration-thickness:1px;transition:.13s;
+  user-select:none;
+}
+.chip input:checked + span{background:#eef4ff;border-color:#c9d8f9;color:#274690;text-decoration:none}
+.chip input:focus-visible + span{box-shadow:0 0 0 3px #dbeafe}
+.chip em{font-style:normal;font-size:9.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#b7a06a}
+.chip input:checked + span em{color:#8a7338}
+
+/* ---------- Lista de personas ---------- */
+.badge{
+  display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:20px;
+  padding:0 7px;border-radius:999px;background:#eef2f8;color:#64748b;
+  font-size:11px;font-weight:700;
+}
+details.panel{padding:0}
+details.panel > summary{
+  padding:17px 20px;cursor:pointer;list-style:none;
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+}
+details.panel > summary::-webkit-details-marker{display:none}
+details.panel > summary h3{margin:0}
+summary .sumright{display:flex;align-items:center;gap:8px}
+summary .caret{font-size:14px;color:var(--faint);transition:transform .15s}
+details[open] summary .caret{transform:rotate(180deg)}
+.roster-body{padding:0 20px 20px}
+.rgroup + .rgroup{margin-top:16px;border-top:1px solid var(--line-soft);padding-top:14px}
+.rlist{display:flex;flex-direction:column;gap:5px;margin-bottom:9px}
+.prow{display:flex;align-items:center;gap:5px}
+.pname{
+  flex:1 1 auto;min-width:0;border:1px solid transparent;background:#f8fafc;border-radius:8px;
+  padding:7px 9px;font:500 12.5px/1.2 inherit;color:var(--ink);
+}
+.pname:hover{border-color:var(--line)}
+.pname:focus{outline:none;border-color:#93c5fd;box-shadow:0 0 0 3px #dbeafe;background:#fff}
+.pname::placeholder{color:#b6c2d2}
+.skills{display:flex;gap:3px;flex:0 0 auto}
+.sk{
+  width:21px;height:21px;padding:0;border:1px solid var(--line);border-radius:6px;
+  background:#fff;color:#cbd5e1;font:700 9.5px/1 inherit;cursor:pointer;transition:.12s;
+}
+.sk:hover{border-color:#c9d8f9}
+.sk.on{background:#eef4ff;border-color:#c9d8f9;color:#274690}
+.del{
+  flex:0 0 auto;width:21px;height:21px;padding:0;border:0;border-radius:6px;
+  background:transparent;color:#cbd5e1;font-size:15px;line-height:1;cursor:pointer;
+}
+.del:hover{background:#fee2e2;color:#b91c1c}
+.radd{align-self:flex-start}
+.linkbtn{
+  border:0;background:transparent;padding:0;color:#b91c1c;font:600 11.5px inherit;
+  cursor:pointer;text-decoration:underline;text-underline-offset:2px;
+}
+
+/* ---------- Ayuda ---------- */
+details.help{border-top:1px solid var(--line-soft);margin-top:14px;padding-top:12px}
+details.help summary{
+  cursor:pointer;font-size:12px;font-weight:600;color:var(--ink-2);
+  list-style:none;display:flex;justify-content:space-between;align-items:center;
+}
+details.help summary::-webkit-details-marker{display:none}
+details.help summary::after{content:"+";font-size:15px;color:var(--faint)}
+details.help[open] summary::after{content:"–"}
+details.help ul{margin:10px 0 0;padding-left:16px;font-size:11.5px;line-height:1.6;color:var(--muted)}
+details.help li{margin-bottom:4px}
+
+/* ---------- Avisos ---------- */
+.warnbox{
+  margin-top:14px;border-radius:14px;padding:12px 16px;font-size:12.5px;line-height:1.5;
+  background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;
+}
+.warnbox strong{display:block;margin-bottom:4px;font-size:11px;letter-spacing:.09em;text-transform:uppercase}
+.warnbox ul{margin:0;padding-left:16px}
+
+.toast{
+  position:fixed;left:50%;bottom:26px;transform:translate(-50%,14px);
+  background:#0f172a;color:#fff;padding:11px 18px;border-radius:12px;
+  font-size:12.5px;font-weight:500;box-shadow:0 14px 30px -12px rgba(15,23,42,.7);
+  opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:60;
+  max-width:calc(100vw - 40px);text-align:center;
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media (max-width:560px){
+  .page{padding:18px 14px 44px}
+  .hero h1{font-size:24px}
+  .poster-head{padding:20px 20px 18px}
+  .cong-input{font-size:21px}
+  .poster-body{padding:16px 14px 16px}
+  .slot{font-size:12.5px;padding:6px 3px}
+  .dayname{font-size:14.5px}
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="hero">
+    <div>
+      <p class="eyebrow">Programa mensual</p>
+      <h1>Reuniones de la congregación</h1>
+      <p class="tagline">Sonido · Micrófono · Plataforma · Acomodadores</p>
+    </div>
+    <div class="hero-tools">
+      <div class="weeknav">
+        <button class="iconbtn" id="prevBtn" type="button" title="Mes anterior" aria-label="Mes anterior">&#8249;</button>
+        <div class="weekinfo">
+          <div class="weeklabel" id="monthLabel">—</div>
+          <input type="month" class="dateinput" id="monthInput" aria-label="Ir a un mes">
+        </div>
+        <button class="iconbtn" id="nextBtn" type="button" title="Mes siguiente" aria-label="Mes siguiente">&#8250;</button>
+      </div>
+      <div class="hero-actions">
+        <button class="btn ghost" id="genBtn" type="button">Generar mes</button>
+        <button class="btn primary" id="jpgBtn" type="button">Descargar JPG</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <main class="main">
+      <section class="poster" id="poster">
+        <div class="poster-head">
+          <p class="p-eyebrow">Programa de reuniones</p>
+          <input class="cong-input" id="congInput" maxlength="58" spellcheck="false" placeholder="Nombre de la congregación" aria-label="Nombre de la congregación">
+          <p class="p-week" id="posterMonth">—</p>
+        </div>
+        <div class="poster-body">
+          <div class="table-scroll">
+            <table class="sched">
+              <colgroup>
+                <col style="width:15%">
+                <col style="width:21%">
+                <col style="width:21%">
+                <col style="width:18%">
+                <col style="width:25%">
+              </colgroup>
+              <thead>
+                <tr>
+                  <th scope="col">Día</th>
+                  <th scope="col" class="h-S">Sonido</th>
+                  <th scope="col" class="h-M">Micrófono</th>
+                  <th scope="col" class="h-P">Plataforma</th>
+                  <th scope="col" class="h-A">Acomodadores</th>
+                </tr>
+              </thead>
+              <tbody id="schedBody"></tbody>
+            </table>
+          </div>
+          <div class="poster-foot">
+            <input class="note-input" id="noteInput" maxlength="90" placeholder="Nota del mes (opcional)" aria-label="Nota del mes">
+            <span class="stamp" id="stamp"></span>
+          </div>
+        </div>
+      </section>
+      <div id="warnings"></div>
+    </main>
+
+    <aside class="side">
+      <section class="panel">
+        <h3>Ajustes</h3>
+        <div class="field">
+          <label for="ushersSel">Acomodadores por reunión</label>
+          <select id="ushersSel">
+            <option value="1" selected>1 persona</option>
+            <option value="2">2 personas</option>
+            <option value="3">3 personas</option>
+            <option value="4">4 personas</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="checkline" for="eldersChk">
+            <input type="checkbox" id="eldersChk" checked>
+            Usar ancianos solo como reemplazo
+          </label>
+          <p class="hint">Entran únicamente cuando no alcanzan los hermanos para cubrir un puesto.</p>
+        </div>
+        <div class="field">
+          <label class="checkline" for="pastChk">
+            <input type="checkbox" id="pastChk">
+            Incluir semanas ya pasadas
+          </label>
+        </div>
+      </section>
+
+      <details class="panel" id="peoplePanel">
+        <summary>
+          <h3>Hermanos y ancianos</h3>
+          <span class="sumright"><span class="badge" id="peopleCount">0</span><span class="caret">▾</span></span>
+        </summary>
+        <div class="roster-body" id="rosterBody"></div>
+      </details>
+
+      <section class="panel">
+        <h3>Disponibilidad del mes</h3>
+        <div id="availList"></div>
+        <p class="hint">Destildá a quien no esté disponible este mes. Se regenera el mes.</p>
+      </section>
+
+      <section class="panel">
+        <h3>Compartir y respaldar</h3>
+        <div style="display:grid;gap:8px">
+          <button class="btn wsp tiny" id="shareBtn" type="button" style="display:none">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+            Compartir app + mis datos
+          </button>
+          <button class="btn primary tiny" id="sendDataBtn" type="button">Descargar app + mis datos</button>
+          <button class="btn ghost tiny" id="sendAppBtn" type="button">Descargar app (sin datos)</button>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn ghost tiny" id="backupBtn" type="button">Guardar copia</button>
+            <button class="btn ghost tiny" id="restoreBtn" type="button">Restaurar copia</button>
+          </div>
+        </div>
+        <p class="hint" id="storeHint" style="margin-top:10px"></p>
+        <details class="help">
+          <summary>Qué hace cada botón</summary>
+          <ul>
+            <li><b>App + mis datos</b>: un solo archivo con el programa y tu mes cargado. Al abrirlo, le pregunta a la otra persona si quiere usar tus datos (si dice que no, no se le cambia nada).</li>
+            <li><b>Compartir</b>: lo manda por el menú del sistema (WhatsApp, correo, etc.). Aparece solo si el dispositivo lo permite.</li>
+            <li><b>App sin datos</b>: el programa con la lista de publicadores y ancianos, pero sin ninguna asignación. Cada uno arma su mes.</li>
+            <li><b>Guardar copia</b>: un archivo chiquito con tus datos, para respaldo o para pasar a otro dispositivo.</li>
+            <li><b>Restaurar copia</b>: carga una copia guardada y reemplaza lo que haya en este dispositivo.</li>
+          </ul>
+        </details>
+      </section>
+
+      <section class="panel">
+        <h3>Reglas aplicadas</h3>
+        <ul style="margin:0;padding-left:16px;font-size:11.5px;line-height:1.65;color:var(--muted)">
+          <li>2 en Sonido y 2 en Micrófono por reunión.</li>
+          <li>Se respeta lo que cada uno puede hacer (S, M, P, A).</li>
+          <li>Los ancianos solo entran como reemplazo.</li>
+          <li>Nadie repite dentro de la misma reunión.</li>
+          <li>Rotación pareja entre las semanas del mes.</li>
+        </ul>
+        <details class="help">
+          <summary>Cómo usar</summary>
+          <ul>
+            <li>Elegí el mes con ‹ › o con el selector.</li>
+            <li>Tocá cualquier nombre para cambiarlo.</li>
+            <li>«Generar mes» propone otra combinación.</li>
+            <li>Al abrirlo por primera vez, el mes viene sin asignaciones (solo los nombres): tocá «Generar mes» o elegí cada puesto a mano.</li>
+            <li>«Descargar JPG» guarda todo el mes en una sola imagen.</li>
+            <li>En «Hermanos y ancianos» podés agregar, renombrar o quitar personas.</li>
+            <li>Para compartir el programa, usá «Compartir y respaldar».</li>
+          </ul>
+        </details>
+        <div style="margin-top:14px;border-top:1px solid var(--line-soft);padding-top:12px">
+          <button class="linkbtn" id="resetBtn" type="button">Borrar datos guardados</button>
+        </div>
+        <input type="file" id="restoreFile" accept="application/json,.json" style="display:none">
+      </section>
+    </aside>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+(function () {
+  'use strict';
+
+  /* ============================================================
+     1. DATOS
+     ============================================================ */
+
+  const DEFAULT_PEOPLE = [
+    { name: 'Alex Maciel',      skills: 'SMPA', elder: false },
+    { name: 'Hernán Benítez',   skills: 'PMA',  elder: false },
+    { name: 'Martín Vera',      skills: 'SMPA', elder: false },
+    { name: 'Pablo Zgainer',    skills: 'SMPA', elder: false },
+    { name: 'David Kral',       skills: 'MA',   elder: false },
+    { name: 'Roberto Rivero',   skills: 'MA',   elder: false },
+    { name: 'Facundo Piesch',   skills: 'SMPA', elder: false },
+    { name: 'Luis Vazques',     skills: 'A',    elder: false },
+    { name: 'Mauro Gassmann',   skills: 'SM',   elder: true },
+    { name: 'Emmanuel Ifrán',   skills: 'SM',   elder: true },
+    { name: 'Esteban Aguero',   skills: 'SM',   elder: true },
+    { name: 'Alberto Bogado',   skills: 'M',    elder: true },
+    { name: 'Roberto Gomez',    skills: 'M',    elder: true }
+  ];
+
+  const ROLES = [
+    { key: 'S', label: 'Sonido',       color: '#0e7490', count: 2 },
+    { key: 'M', label: 'Micrófono',    color: '#7c3aed', count: 2 },
+    { key: 'P', label: 'Plataforma',   color: '#b45309', count: 1 },
+    { key: 'A', label: 'Acomodadores', color: '#047857', count: 1 }
+  ];
+  const ROLE_COUNT  = { S: 2, M: 2, P: 1, A: 1 };
+  const ROLE_OFFSET = { S: 0, P: 2, M: 1, A: 3 };
+  const ROLE_KEYS   = ['S', 'M', 'P', 'A'];
+  const SKILL_NAMES = { S: 'Sonido', M: 'Micrófono', P: 'Plataforma', A: 'Acomodador' };
+
+  const MEETINGS = [
+    { key: 'thu', name: 'Jueves', offset: 0 },
+    { key: 'sat', name: 'Sábado', offset: 2 }
+  ];
+
+  const MONTHS = ['enero','febrero','marzo','abril','mayo','junio','julio',
+                  'agosto','septiembre','octubre','noviembre','diciembre'];
+  const STORE = 'programa-reuniones-v2';
+  // La clave de guardado NO se cambia entre versiones del archivo: así los
+  // datos que ya están en el navegador se siguen leyendo al abrir el HTML nuevo.
+  const STORE_TEST = STORE + ':test';
+  const VERSION = 2;
+  let storageOK = true;
+  const TODAY = (function () {
+    const n = new Date();
+    return new Date(n.getFullYear(), n.getMonth(), n.getDate());
+  })();
+
+  /* ============================================================
+     2. FECHAS
+     ============================================================ */
+
+  function parseYMD(s) {
+    const p = String(s).split('-').map(Number);
+    return new Date(p[0], p[1] - 1, p[2]);
+  }
+  function ymd(d) {
+    return d.getFullYear() + '-' +
+      String(d.getMonth() + 1).padStart(2, '0') + '-' +
+      String(d.getDate()).padStart(2, '0');
+  }
+  function addDays(d, n) {
+    const x = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+    x.setDate(x.getDate() + n);
+    return x;
+  }
+  function mondayOf(d) { return addDays(d, -((d.getDay() + 6) % 7)); }
+  function thursdayOf(d) { return addDays(mondayOf(d), 3); }
+  function weekIndex(thuYMD) {
+    const epoch = new Date(2024, 0, 1);
+    const diff = Math.round((mondayOf(parseYMD(thuYMD)) - mondayOf(epoch)) / 86400000);
+    return Math.floor(diff / 7);
+  }
+  function monthKeyOf(d) {
+    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+  }
+  function monthTitle(mk) {
+    const p = mk.split('-').map(Number);
+    const name = MONTHS[p[1] - 1];
+    return name.charAt(0).toUpperCase() + name.slice(1) + ' de ' + p[0];
+  }
+  function weekRangeLabel(thuYMD) {
+    const thu = parseYMD(thuYMD);
+    const mon = addDays(thu, -3);
+    const sat = addDays(thu, 2);
+    if (mon.getMonth() === sat.getMonth()) {
+      return 'Semana del ' + mon.getDate() + ' al ' + sat.getDate() +
+             ' de ' + MONTHS[sat.getMonth()];
+    }
+    return 'Semana del ' + mon.getDate() + ' de ' + MONTHS[mon.getMonth()] +
+           ' al ' + sat.getDate() + ' de ' + MONTHS[sat.getMonth()];
+  }
+  function weeksOfMonth(mk) {
+    const p = mk.split('-').map(Number);
+    let d = new Date(p[0], p[1] - 1, 1);
+    while (d.getDay() !== 4) d = addDays(d, 1);
+    const list = [];
+    while (d.getMonth() === p[1] - 1) {
+      list.push(ymd(d));
+      d = addDays(d, 7);
+    }
+    return list;
+  }
+  function longDate(d) {
+    return d.getDate() + ' de ' + MONTHS[d.getMonth()];
+  }
+  function todayLabel() {
+    return TODAY.getDate() + ' de ' + MONTHS[TODAY.getMonth()] + ' de ' + TODAY.getFullYear();
+  }
+
+  /* ============================================================
+     3. ESTADO
+     ============================================================ */
+
+  function defaultState() {
+    return {
+      congregation: 'Congregación',
+      ushers: 1,
+      eldersReplace: true,
+      showPast: false,
+      month: monthKeyOf(TODAY),
+      people: DEFAULT_PEOPLE.map(function (p) { return Object.assign({}, p); }),
+      weeks: {},
+      unavailable: {},
+      manual: {},
+      seeds: {},
+      notes: {}
+    };
+  }
+
+  let state = defaultState();
+
+  function normalize(saved) {
+    state = Object.assign(defaultState(), saved);
+    if (!Array.isArray(state.people) || !state.people.length) {
+      state.people = DEFAULT_PEOPLE.map(function (p) { return Object.assign({}, p); });
+    }
+    state.weeks = (saved && saved.weeks) || {};
+    state.unavailable = (saved && saved.unavailable) || {};
+    state.manual = (saved && saved.manual) || {};
+    state.seeds = (saved && saved.seeds) || {};
+    state.notes = (saved && saved.notes) || {};
+    if (!/^\d{4}-\d{2}$/.test(state.month)) state.month = monthKeyOf(TODAY);
+  }
+
+  function load() {
+    try {
+      localStorage.setItem(STORE_TEST, '1');
+      localStorage.removeItem(STORE_TEST);
+    } catch (e) {
+      storageOK = false;
+      return;
+    }
+    try {
+      const raw = localStorage.getItem(STORE);
+      if (!raw) return;
+      const saved = JSON.parse(raw);
+      if (!saved || typeof saved !== 'object') return;
+      normalize(saved);
+    } catch (e) { /* arranque limpio */ }
+  }
+  function save() {
+    try {
+      localStorage.setItem(STORE, JSON.stringify(state));
+      storageOK = true;
+    } catch (e) {
+      storageOK = false;
+    }
+  }
+
+  function renderStoreHint() {
+    const el = $('#storeHint');
+    if (!el) return;
+    if (storageOK) {
+      el.textContent = 'Los cambios se guardan solo en este navegador y dispositivo. ' +
+        'Para pasar todo a otro equipo usá «Descargar app + mis datos» o «Guardar copia».';
+      el.style.color = '';
+    } else {
+      el.textContent = 'Este navegador no permite guardar datos (todo se pierde al cerrar). ' +
+        'Descargá una copia antes de salir.';
+      el.style.color = '#9a3412';
+    }
+  }
+
+  function downloadFile(name, blob) {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = name;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(function () { URL.revokeObjectURL(url); }, 4000);
+  }
+
+  function snapshot() {
+    return {
+      app: 'programa-reuniones',
+      version: VERSION,
+      savedAt: new Date().toISOString(),
+      label: (state.congregation || 'Congregación').trim() + ' — ' + monthTitle(state.month),
+      data: state
+    };
+  }
+
+  function exportBackup() {
+    downloadFile('programa-reuniones-' + state.month + '.json',
+      new Blob([JSON.stringify(snapshot(), null, 2)], { type: 'application/json' }));
+    toast('Copia descargada');
+  }
+
+  /* Copia el propio programa a un HTML limpio, opcionalmente con los datos adentro. */
+  function buildAppHtml(embedded) {
+    const clone = document.documentElement.cloneNode(true);
+
+    ['#schedBody', '#availList', '#rosterBody', '#warnings'].forEach(function (sel) {
+      const el = clone.querySelector(sel);
+      if (el) el.innerHTML = '';
+    });
+    [['#monthLabel', '—'], ['#posterMonth', '—'], ['#stamp', ''], ['#peopleCount', '0'],
+     ['#storeHint', ''], ['#toast', '']].forEach(function (pair) {
+      const el = clone.querySelector(pair[0]);
+      if (el) el.textContent = pair[1];
+    });
+    const clToast = clone.querySelector('#toast');
+    if (clToast) clToast.classList.remove('show');
+
+    // El botón de compartir se muestra recién si el dispositivo que abre el archivo lo soporta.
+    const clShare = clone.querySelector('#shareBtn');
+    if (clShare) clShare.style.display = 'none';
+
+    if (embedded) {
+      const script = document.createElement('script');
+      script.textContent = embeddedScript(embedded);
+      clone.querySelector('body').appendChild(script);
+    }
+    return '<!doctype html>\n' + clone.outerHTML;
+  }
+
+  /* Aviso que se muestra al abrir un archivo enviado con datos.
+     Pregunta antes de tocar nada: si la persona dice que no, sus datos quedan igual. */
+  function embeddedScript(snap) {
+    const payload = JSON.stringify(snap).replace(/<\//g, '<\\/');
+    return [
+      '(function () {',
+      '  var SNAP = ' + payload + ';',
+      '  var STORE = ' + JSON.stringify(STORE) + ';',
+      '  var MARK = STORE + ":embed";',
+      '  function get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }',
+      '  function set(k, v) { try { localStorage.setItem(k, v); return true; } catch (e) { return false; } }',
+      '  if (get(MARK) === SNAP.savedAt) return;',
+      '  if (get(MARK + ":no") === SNAP.savedAt) return;',
+      '  function offer() {',
+      '    var ok = window.confirm("Este archivo viene con los datos de:\\n\\n" + SNAP.label +',
+      '      "\\n\\n¿Querés cargarlos en este dispositivo? Se reemplazan los datos guardados acá.");',
+      '    if (!ok) { set(MARK + ":no", SNAP.savedAt); return; }',
+      '    if (!set(STORE, JSON.stringify(SNAP.data))) {',
+      '      window.alert("Este navegador no permite guardar datos.");',
+      '      return;',
+      '    }',
+      '    set(MARK, SNAP.savedAt);',
+      '    location.reload();',
+      '  }',
+      '  if (document.readyState === "complete") setTimeout(offer, 250);',
+      '  else window.addEventListener("load", function () { setTimeout(offer, 250); });',
+      '})();'
+    ].join('\n');
+  }
+
+  function exportApp() {
+    downloadFile('programa-reuniones.html',
+      new Blob([buildAppHtml(null)], { type: 'text/html;charset=utf-8' }));
+    toast('App descargada');
+  }
+
+  function exportAppWithData() {
+    downloadFile('programa-reuniones-con-datos.html',
+      new Blob([buildAppHtml(snapshot())], { type: 'text/html;charset=utf-8' }));
+    toast('App con tus datos descargada');
+  }
+
+  function shareSupported() {
+    try {
+      if (!navigator.share || !navigator.canShare || typeof File === 'undefined') return false;
+      const probe = new File(['x'], 'prueba.html', { type: 'text/html' });
+      return navigator.canShare({ files: [probe] });
+    } catch (e) { return false; }
+  }
+
+  function shareAppWithData() {
+    const snap = snapshot();
+    const file = new File([buildAppHtml(snap)], 'programa-reuniones-con-datos.html', { type: 'text/html' });
+    try {
+      if (!navigator.canShare || !navigator.canShare({ files: [file] })) { exportAppWithData(); return; }
+      navigator.share({
+        files: [file],
+        title: 'Programa de reuniones',
+        text: 'Programa de reuniones — ' + (state.congregation || 'Congregación')
+      }).then(function () {
+        toast('Compartido');
+      }).catch(function (err) {
+        if (err && err.name === 'AbortError') return;
+        exportAppWithData();
+      });
+    } catch (e) {
+      exportAppWithData();
+    }
+  }
+
+  function importBackup(file) {
+    const reader = new FileReader();
+    reader.onload = function () {
+      let obj = null;
+      try { obj = JSON.parse(String(reader.result)); } catch (e) { obj = null; }
+      const data = obj && obj.data ? obj.data : obj;
+      if (!data || typeof data !== 'object' || !Array.isArray(data.people)) {
+        window.alert('El archivo no parece ser una copia de este programa.');
+        return;
+      }
+      if (!window.confirm('Se reemplazan los datos guardados en este dispositivo por los de la copia. ¿Continuar?')) return;
+      normalize(data);
+      ensureMonth();
+      save();
+      render();
+      toast('Copia restaurada');
+    };
+    reader.onerror = function () { window.alert('No se pudo leer el archivo.'); };
+    reader.readAsText(file);
+  }
+
+  /* ============================================================
+     4. UTILIDADES
+     ============================================================ */
+
+  function $(sel) { return document.querySelector(sel); }
+  function activePeople() {
+    return state.people.filter(function (p) { return p.name && p.name.trim(); });
+  }
+  function canRole(p, role) { return !!p && (p.skills || '').indexOf(role) !== -1; }
+  function isAvailable(name, mk) {
+    return (state.unavailable[mk] || []).indexOf(name) === -1;
+  }
+  function rotate(arr, off) {
+    if (!arr.length) return [];
+    const r = ((off % arr.length) + arr.length) % arr.length;
+    return arr.slice(r).concat(arr.slice(0, r));
+  }
+  let toastTimer = null;
+  function toast(msg) {
+    const el = $('#toast');
+    el.textContent = msg;
+    el.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { el.classList.remove('show'); }, 2400);
+  }
+
+  /* ============================================================
+     5. GENERACIÓN
+     ============================================================ */
+
+  function displayedWeeks() {
+    const all = weeksOfMonth(state.month);
+    if (state.showPast) return all;
+    const future = all.filter(function (k) {
+      return addDays(parseYMD(k), 2) >= TODAY;
+    });
+    return future.length ? future : all;
+  }
+
+  function pickFor(role, meetingRoles, used, unavailable, counts, roleCounts, wi, seed) {
+    const pool = activePeople().filter(function (p) { return canRole(p, role); });
+    const nonElders = pool.filter(function (p) { return !p.elder; });
+    const elders = pool.filter(function (p) { return p.elder; });
+
+    let ordered = rotate(nonElders, wi + seed * 2 + (ROLE_OFFSET[role] || 0));
+    if (state.eldersReplace) ordered = ordered.concat(rotate(elders, wi + seed * 2));
+
+    ordered = ordered.filter(function (p) {
+      return !unavailable.has(p.name) && !used.has(p.name);
+    });
+    if (!ordered.length) return '';
+
+    let best = null;
+    let bestKey = Infinity;
+    ordered.forEach(function (p, i) {
+      const count = counts.get(p.name) || 0;
+      const roleCount = roleCounts.get(role + '|' + p.name) || 0;
+      const key = roleCount * 1000 + (role === 'A' ? 0 : count * 10) +
+                  i + (p.elder ? 1000000 : 0);
+      if (key < bestKey) { bestKey = key; best = p; }
+    });
+    return best ? best.name : '';
+  }
+
+  function generateWeek(key) {
+    const wi = weekIndex(key);
+    const seed = state.seeds[key] || 0;
+    const unavailable = new Set(state.unavailable[state.month] || []);
+    const counts = new Map();
+    const roleCounts = new Map();
+
+    const sched = {
+      thu: { S: [], M: [], P: [], A: [] },
+      sat: { S: [], M: [], P: [], A: [] }
+    };
+
+    MEETINGS.forEach(function (m) {
+      const used = new Set();
+      ['S', 'P', 'A', 'M'].forEach(function (role) {
+        const need = role === 'A' ? state.ushers : ROLE_COUNT[role];
+        for (let i = 0; i < need; i++) {
+          const name = pickFor(role, sched[m.key], used, unavailable, counts, roleCounts, wi, seed);
+          if (name) {
+            used.add(name);
+            counts.set(name, (counts.get(name) || 0) + 1);
+            const rk = role + '|' + name;
+            roleCounts.set(rk, (roleCounts.get(rk) || 0) + 1);
+          }
+          sched[m.key][role].push(name || '');
+        }
+      });
+    });
+
+    return sched;
+  }
+
+  /* Mes nuevo: casilleros vacíos, sin asignaciones. Los nombres ya están,
+     pero nadie queda asignado hasta tocar «Generar mes» o elegir a mano. */
+  function blankWeek() {
+    return {
+      thu: { S: [], M: [], P: [], A: [] },
+      sat: { S: [], M: [], P: [], A: [] }
+    };
+  }
+
+  function ensureMonth() {
+    displayedWeeks().forEach(function (k) {
+      const sched = state.weeks[k];
+      if (!sched) { state.weeks[k] = blankWeek(); return; }
+      MEETINGS.forEach(function (m) {
+        if (!sched[m.key]) sched[m.key] = { S: [], M: [], P: [], A: [] };
+        ROLE_KEYS.forEach(function (r) {
+          const need = r === 'A' ? state.ushers : ROLE_COUNT[r];
+          const arr = sched[m.key][r] || [];
+          while (arr.length < need) arr.push('');
+          sched[m.key][r] = arr;
+        });
+      });
+    });
+  }
+
+  function regenerateMonth(newSeed) {
+    displayedWeeks().forEach(function (k) {
+      if (newSeed) state.seeds[k] = (state.seeds[k] || 0) + 1;
+      state.weeks[k] = generateWeek(k);
+      state.manual[k] = false;
+    });
+  }
+
+  /* ============================================================
+     6. RENDER
+     ============================================================ */
+
+  function buildOptions(role, current) {
+    const frag = document.createDocumentFragment();
+    const empty = document.createElement('option');
+    empty.value = '';
+    empty.textContent = '—';
+    frag.appendChild(empty);
+
+    const pool = activePeople();
+    const groups = [
+      { label: 'Hermanos', list: pool.filter(function (p) { return !p.elder && canRole(p, role); }) },
+      { label: 'Ancianos', list: pool.filter(function (p) { return p.elder && canRole(p, role); }) }
+    ];
+    groups.forEach(function (g) {
+      if (!g.list.length) return;
+      const og = document.createElement('optgroup');
+      og.label = g.label;
+      g.list.forEach(function (p) {
+        const o = document.createElement('option');
+        o.value = p.name;
+        o.textContent = p.name;
+        og.appendChild(o);
+      });
+      frag.appendChild(og);
+    });
+
+    if (current && !pool.some(function (p) { return p.name === current; })) {
+      const o = document.createElement('option');
+      o.value = current;
+      o.textContent = current;
+      frag.appendChild(o);
+    }
+    return frag;
+  }
+
+  function buildSelect(role, weekKey, meetingKey, index, value) {
+    const sel = document.createElement('select');
+    sel.className = 'slot' + (value ? '' : ' empty') + (value && value.length > 13 ? ' long' : '');
+    sel.dataset.role = role;
+    sel.dataset.week = weekKey;
+    sel.dataset.meeting = meetingKey;
+    sel.dataset.index = String(index);
+    const roleLabel = ROLES.filter(function (r) { return r.key === role; })[0].label;
+    sel.setAttribute('aria-label', roleLabel + ' ' + weekKey + ' ' +
+      (meetingKey === 'thu' ? 'jueves' : 'sábado') + ' ' + (index + 1));
+    sel.appendChild(buildOptions(role, value));
+    sel.value = value || '';
+    sel.addEventListener('change', onSlotChange);
+    return sel;
+  }
+
+  function renderSheet() {
+    const tbody = $('#schedBody');
+    tbody.innerHTML = '';
+
+    displayedWeeks().forEach(function (weekKey) {
+      const sched = state.weeks[weekKey];
+      if (!sched) return;
+      const thu = parseYMD(weekKey);
+
+      const group = document.createElement('tr');
+      group.className = 'weekrow';
+      const gth = document.createElement('th');
+      gth.colSpan = 5;
+      gth.textContent = weekRangeLabel(weekKey);
+      group.appendChild(gth);
+      tbody.appendChild(group);
+
+      MEETINGS.forEach(function (m) {
+        const date = addDays(thu, m.offset);
+        const tr = document.createElement('tr');
+
+        const th = document.createElement('th');
+        th.scope = 'row';
+        const dayName = document.createElement('span');
+        dayName.className = 'dayname';
+        dayName.textContent = m.name;
+        const dayDate = document.createElement('span');
+        dayDate.className = 'daydate';
+        dayDate.textContent = longDate(date);
+        th.appendChild(dayName);
+        th.appendChild(dayDate);
+        tr.appendChild(th);
+
+        ROLES.forEach(function (role) {
+          const td = document.createElement('td');
+          const names = sched[m.key][role.key] || [];
+          const need = role.key === 'A' ? state.ushers : ROLE_COUNT[role.key];
+          for (let i = 0; i < need; i++) {
+            td.appendChild(buildSelect(role.key, weekKey, m.key, i, names[i] || ''));
+          }
+          tr.appendChild(td);
+        });
+
+        tbody.appendChild(tr);
+      });
+    });
+  }
+
+  function renderAvailability() {
+    const box = $('#availList');
+    box.innerHTML = '';
+    const pool = activePeople();
+    const groups = [
+      { label: 'Hermanos', list: pool.filter(function (p) { return !p.elder; }) },
+      { label: 'Ancianos', list: pool.filter(function (p) { return p.elder; }) }
+    ];
+    groups.forEach(function (g) {
+      if (!g.list.length) return;
+      const wrap = document.createElement('div');
+      wrap.className = 'avail-group';
+      const h = document.createElement('h4');
+      h.textContent = g.label;
+      wrap.appendChild(h);
+      const chips = document.createElement('div');
+      chips.className = 'chips';
+      g.list.forEach(function (p) {
+        const label = document.createElement('label');
+        label.className = 'chip';
+        const inp = document.createElement('input');
+        inp.type = 'checkbox';
+        inp.checked = isAvailable(p.name, state.month);
+        inp.dataset.name = p.name;
+        inp.addEventListener('change', onAvailabilityChange);
+        const span = document.createElement('span');
+        span.textContent = p.name;
+        if (p.elder) {
+          const em = document.createElement('em');
+          em.textContent = 'anc.';
+          span.appendChild(em);
+        }
+        label.appendChild(inp);
+        label.appendChild(span);
+        chips.appendChild(label);
+      });
+      wrap.appendChild(chips);
+      box.appendChild(wrap);
+    });
+  }
+
+  function renderRoster() {
+    const box = $('#rosterBody');
+    box.innerHTML = '';
+    const groups = [
+      { key: 'brother', label: 'Hermanos', elder: false },
+      { key: 'elder', label: 'Ancianos', elder: true }
+    ];
+    groups.forEach(function (g) {
+      const wrap = document.createElement('div');
+      wrap.className = 'rgroup';
+      const h = document.createElement('h4');
+      h.textContent = g.label;
+      wrap.appendChild(h);
+
+      const list = document.createElement('div');
+      list.className = 'rlist';
+      state.people.forEach(function (p, idx) {
+        if (!!p.elder === g.elder) list.appendChild(buildPersonRow(p, idx));
+      });
+      wrap.appendChild(list);
+
+      const add = document.createElement('button');
+      add.type = 'button';
+      add.className = 'btn ghost tiny radd';
+      add.dataset.add = g.key;
+      add.textContent = '+ Agregar ' + (g.elder ? 'anciano' : 'hermano');
+      wrap.appendChild(add);
+
+      box.appendChild(wrap);
+    });
+    $('#peopleCount').textContent = String(activePeople().length);
+  }
+
+  function buildPersonRow(p, idx) {
+    const row = document.createElement('div');
+    row.className = 'prow';
+    row.dataset.name = p.name;
+    row.dataset.idx = String(idx);
+
+    const input = document.createElement('input');
+    input.className = 'pname';
+    input.type = 'text';
+    input.value = p.name;
+    input.placeholder = 'Nombre y apellido';
+    input.spellcheck = false;
+    input.setAttribute('aria-label', 'Nombre');
+    row.appendChild(input);
+
+    const skills = document.createElement('div');
+    skills.className = 'skills';
+    ROLE_KEYS.forEach(function (role) {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'sk' + (canRole(p, role) ? ' on' : '');
+      b.dataset.sk = role;
+      b.textContent = role;
+      b.title = SKILL_NAMES[role];
+      skills.appendChild(b);
+    });
+    row.appendChild(skills);
+
+    const del = document.createElement('button');
+    del.type = 'button';
+    del.className = 'del';
+    del.dataset.del = '1';
+    del.title = 'Quitar';
+    del.setAttribute('aria-label', 'Quitar ' + (p.name || 'persona'));
+    del.textContent = '×';
+    row.appendChild(del);
+
+    return row;
+  }
+
+  function renderWarnings() {
+    const box = $('#warnings');
+    box.innerHTML = '';
+    const issues = [];
+    let assigned = 0;
+
+    displayedWeeks().forEach(function (weekKey) {
+      const sched = state.weeks[weekKey];
+      if (!sched) return;
+      const label = weekRangeLabel(weekKey).replace('Semana del ', '');
+      MEETINGS.forEach(function (m) {
+        const seen = new Map();
+        ROLES.forEach(function (role) {
+          (sched[m.key][role.key] || []).forEach(function (n) {
+            if (n) assigned++;
+            if (!n) {
+              issues.push('Falta cubrir ' + role.label + ' el ' + m.name.toLowerCase() + ' (' + label + ').');
+              return;
+            }
+            if (seen.has(n)) {
+              issues.push(n + ' está dos veces el ' + m.name.toLowerCase() + ' (' + label + ').');
+            }
+            seen.set(n, role.key);
+          });
+        });
+      });
+    });
+
+    if (!issues.length || !assigned) return;
+    const div = document.createElement('div');
+    div.className = 'warnbox';
+    const strong = document.createElement('strong');
+    strong.textContent = 'Revisar';
+    const ul = document.createElement('ul');
+    Array.from(new Set(issues)).slice(0, 8).forEach(function (t) {
+      const li = document.createElement('li');
+      li.textContent = t;
+      ul.appendChild(li);
+    });
+    div.appendChild(strong);
+    div.appendChild(ul);
+    box.appendChild(div);
+  }
+
+  function renderHeader() {
+    const title = monthTitle(state.month);
+    $('#monthLabel').textContent = title;
+    $('#posterMonth').textContent = title;
+    $('#monthInput').value = state.month;
+    $('#stamp').textContent = 'Generado el ' + todayLabel();
+
+    const cong = $('#congInput');
+    if (document.activeElement !== cong) cong.value = state.congregation || '';
+
+    const note = $('#noteInput');
+    if (document.activeElement !== note) note.value = state.notes[state.month] || '';
+  }
+
+  function render() {
+    ensureMonth();
+    renderHeader();
+    renderSheet();
+    renderAvailability();
+    renderRoster();
+    renderWarnings();
+    $('#ushersSel').value = String(state.ushers);
+    $('#eldersChk').checked = !!state.eldersReplace;
+    $('#pastChk').checked = !!state.showPast;
+    renderStoreHint();
+  }
+
+  /* ============================================================
+     7. EVENTOS
+     ============================================================ */
+
+  function shiftMonth(delta) {
+    const p = state.month.split('-').map(Number);
+    state.month = monthKeyOf(new Date(p[0], p[1] - 1 + delta, 1));
+    ensureMonth();
+    save();
+    render();
+  }
+
+  function maybeConfirmRegen() {
+    const dirty = displayedWeeks().some(function (k) { return state.manual[k]; });
+    return !dirty || window.confirm('Se regenera el mes y se pierden los cambios manuales. ¿Continuar?');
+  }
+
+  function onSlotChange(ev) {
+    const sel = ev.target;
+    const sched = state.weeks[sel.dataset.week];
+    const role = sel.dataset.role;
+    const meeting = sel.dataset.meeting;
+    const index = Number(sel.dataset.index);
+    if (!sched || !sched[meeting] || !sched[meeting][role]) return;
+    sched[meeting][role][index] = sel.value;
+    state.manual[sel.dataset.week] = true;
+    sel.classList.toggle('empty', !sel.value);
+    save();
+    renderWarnings();
+  }
+
+  function onAvailabilityChange(ev) {
+    const inp = ev.target;
+    const mk = state.month;
+    const set = new Set(state.unavailable[mk] || []);
+    if (inp.checked) set.delete(inp.dataset.name);
+    else set.add(inp.dataset.name);
+    if (!maybeConfirmRegen()) { inp.checked = !inp.checked; return; }
+    state.unavailable[mk] = Array.from(set);
+    regenerateMonth(false);
+    save();
+    render();
+    toast('Mes regenerado');
+  }
+
+  function rosterIndex(el) {
+    const row = el.closest('.prow');
+    if (!row) return -1;
+    const idx = Number(row.dataset.idx);
+    return Number.isFinite(idx) ? idx : -1;
+  }
+
+  function onRosterName(ev) {
+    const input = ev.target;
+    if (!input.classList || !input.classList.contains('pname')) return;
+    const idx = rosterIndex(input);
+    if (idx < 0 || !state.people[idx]) return;
+    const person = state.people[idx];
+    const oldName = person.name;
+    const newName = input.value.trim();
+
+    if (!newName) {
+      if (!oldName) { state.people.splice(idx, 1); save(); render(); return; }
+      input.value = oldName;
+      return;
+    }
+    if (newName === oldName) { input.value = newName; return; }
+    if (state.people.some(function (p, i) { return i !== idx && p.name === newName; })) {
+      window.alert('Ya hay una persona con ese nombre.');
+      input.value = oldName;
+      return;
+    }
+
+    person.name = newName;
+    if (oldName) {
+      Object.keys(state.weeks).forEach(function (w) {
+        const sc = state.weeks[w];
+        MEETINGS.forEach(function (m) {
+          ROLE_KEYS.forEach(function (r) {
+            sc[m.key][r] = (sc[m.key][r] || []).map(function (n) {
+              return n === oldName ? newName : n;
+            });
+          });
+        });
+      });
+      Object.keys(state.unavailable).forEach(function (mk) {
+        state.unavailable[mk] = (state.unavailable[mk] || []).map(function (n) {
+          return n === oldName ? newName : n;
+        });
+      });
+    }
+    state.manual = {};
+    save();
+    render();
+    toast(oldName ? 'Nombre actualizado' : 'Persona agregada');
+  }
+
+  function onRosterClick(ev) {
+    const sk = ev.target.closest('.sk');
+    if (sk) {
+      const idx = rosterIndex(sk);
+      if (idx < 0 || !state.people[idx]) return;
+      const person = state.people[idx];
+      const role = sk.dataset.sk;
+      let skills = person.skills || '';
+      if (skills.indexOf(role) !== -1) {
+        if (!person.name) { /* sin nombre, igual se puede tocar */ }
+        skills = skills.replace(role, '');
+        Object.keys(state.weeks).forEach(function (w) {
+          const sc = state.weeks[w];
+          MEETINGS.forEach(function (m) {
+            sc[m.key][role] = (sc[m.key][role] || []).map(function (n) {
+              return n === person.name ? '' : n;
+            });
+          });
+        });
+        state.manual = {};
+      } else {
+        skills += role;
+      }
+      person.skills = ROLE_KEYS.filter(function (r) { return skills.indexOf(r) !== -1; }).join('');
+      save();
+      render();
+      return;
+    }
+
+    const del = ev.target.closest('.del');
+    if (del) {
+      const idx = rosterIndex(del);
+      if (idx < 0 || !state.people[idx]) return;
+      const person = state.people[idx];
+      if (person.name && !window.confirm('¿Quitar a ' + person.name + '? Se borran sus asignaciones.')) return;
+      state.people.splice(idx, 1);
+      if (person.name) {
+        Object.keys(state.weeks).forEach(function (w) {
+          const sc = state.weeks[w];
+          MEETINGS.forEach(function (m) {
+            ROLE_KEYS.forEach(function (r) {
+              sc[m.key][r] = (sc[m.key][r] || []).map(function (n) {
+                return n === person.name ? '' : n;
+              });
+            });
+          });
+        });
+        Object.keys(state.unavailable).forEach(function (mk) {
+          state.unavailable[mk] = (state.unavailable[mk] || []).filter(function (n) {
+            return n !== person.name;
+          });
+        });
+      }
+      state.manual = {};
+      save();
+      render();
+      return;
+    }
+
+    const add = ev.target.closest('.radd');
+    if (add) {
+      const elder = add.dataset.add === 'elder';
+      state.people.push({ name: '', skills: 'SMPA', elder: elder });
+      save();
+      renderRoster();
+      const groups = document.querySelectorAll('#rosterBody .rgroup');
+      const gi = elder ? 1 : 0;
+      const inputs = groups[gi] ? groups[gi].querySelectorAll('.pname') : [];
+      const last = inputs[inputs.length - 1];
+      if (last) last.focus();
+    }
+  }
+
+  function bindEvents() {
+    $('#prevBtn').addEventListener('click', function () { shiftMonth(-1); });
+    $('#nextBtn').addEventListener('click', function () { shiftMonth(1); });
+    $('#monthInput').addEventListener('change', function (ev) {
+      if (!ev.target.value) return;
+      state.month = ev.target.value;
+      ensureMonth();
+      save();
+      render();
+    });
+    $('#genBtn').addEventListener('click', function () {
+      regenerateMonth(true);
+      save();
+      render();
+      toast('Mes generado');
+    });
+    $('#jpgBtn').addEventListener('click', function () { exportJPG(); });
+    $('#congInput').addEventListener('input', function (ev) {
+      state.congregation = ev.target.value;
+      save();
+    });
+    $('#noteInput').addEventListener('input', function (ev) {
+      state.notes[state.month] = ev.target.value;
+      save();
+    });
+    $('#ushersSel').addEventListener('change', function (ev) {
+      if (!maybeConfirmRegen()) { render(); return; }
+      state.ushers = Number(ev.target.value) || 1;
+      regenerateMonth(false);
+      save();
+      render();
+    });
+    $('#eldersChk').addEventListener('change', function (ev) {
+      if (!maybeConfirmRegen()) { render(); return; }
+      state.eldersReplace = ev.target.checked;
+      regenerateMonth(false);
+      save();
+      render();
+    });
+    $('#pastChk').addEventListener('change', function (ev) {
+      state.showPast = ev.target.checked;
+      ensureMonth();
+      save();
+      render();
+    });
+    $('#rosterBody').addEventListener('change', onRosterName);
+    $('#rosterBody').addEventListener('click', onRosterClick);
+    $('#backupBtn').addEventListener('click', exportBackup);
+    $('#sendAppBtn').addEventListener('click', exportApp);
+    $('#sendDataBtn').addEventListener('click', exportAppWithData);
+    if (shareSupported()) {
+      const sb = $('#shareBtn');
+      sb.style.display = '';
+      sb.addEventListener('click', shareAppWithData);
+    }
+    $('#restoreBtn').addEventListener('click', function () { $('#restoreFile').click(); });
+    $('#restoreFile').addEventListener('change', function (ev) {
+      const f = ev.target.files && ev.target.files[0];
+      if (f) importBackup(f);
+      ev.target.value = '';
+    });
+    $('#resetBtn').addEventListener('click', function () {
+      if (!window.confirm('Se borran el nombre, los ajustes, las personas y todas las semanas guardadas. ¿Continuar?')) return;
+      try { localStorage.removeItem(STORE); } catch (e) {}
+      state = defaultState();
+      ensureMonth();
+      save();
+      render();
+      toast('Datos borrados');
+    });
+  }
+
+  /* ============================================================
+     8. EXPORTAR JPG DEL MES
+     ============================================================ */
+
+  function roundRect(ctx, x, y, w, h, r) {
+    const rr = Math.min(r, w / 2, h / 2);
+    ctx.beginPath();
+    ctx.moveTo(x + rr, y);
+    ctx.arcTo(x + w, y, x + w, y + h, rr);
+    ctx.arcTo(x + w, y + h, x, y + h, rr);
+    ctx.arcTo(x, y + h, x, y, rr);
+    ctx.arcTo(x, y, x + w, y, rr);
+    ctx.closePath();
+  }
+
+  function drawTracked(ctx, text, x, y, spacing, align) {
+    const chars = Array.from(text);
+    const widths = chars.map(function (c) { return ctx.measureText(c).width; });
+    const total = widths.reduce(function (a, b) { return a + b; }, 0) +
+                  spacing * (chars.length - 1);
+    let cx = align === 'center' ? x - total / 2 : x;
+    ctx.textAlign = 'left';
+    chars.forEach(function (c, i) {
+      ctx.fillText(c, cx, y);
+      cx += widths[i] + spacing;
+    });
+    return total;
+  }
+
+  function fitFont(ctx, text, maxW, size, weight, family) {
+    let s = size;
+    while (s > 10) {
+      ctx.font = weight + ' ' + s + 'px ' + family;
+      if (ctx.measureText(text).width <= maxW) break;
+      s -= 0.5;
+    }
+    return s;
+  }
+
+  function ellipsize(ctx, text, maxW) {
+    if (ctx.measureText(text).width <= maxW) return text;
+    let t = text;
+    while (t.length > 1 && ctx.measureText(t + '…').width > maxW) t = t.slice(0, -1);
+    return t + '…';
+  }
+
+  function exportJPG() {
+    const weeks = displayedWeeks();
+    const FAMILY = '"Segoe UI", system-ui, -apple-system, Arial, sans-serif';
+
+    let maxNames = 2;
+    weeks.forEach(function (k) {
+      const s = state.weeks[k];
+      if (!s) return;
+      ['thu', 'sat'].forEach(function (m) {
+        maxNames = Math.max(maxNames, s[m].A.length, s[m].S.length);
+      });
+    });
+
+    const S = 2;
+    const PAD = 48;
+    const CARD_W = 1304;
+    const BODY_PAD = 40;
+    const TABLE_W = 1224;
+    const COLS = [184, 257, 257, 220, 306];
+    const HEADER_H = 158;
+    const GAP = 34;
+    const THEAD_H = 54;
+    const BAND_H = 40;
+    const ROW_H = Math.max(104, 26 + maxNames * 30);
+    const LINE_H = 30;
+
+    const tableTop = PAD + HEADER_H + GAP;
+    const tableBottom = tableTop + THEAD_H + weeks.length * (BAND_H + ROW_H * 2);
+    const footerTop = tableBottom + 22;
+    const cardH = HEADER_H + GAP + THEAD_H + weeks.length * (BAND_H + ROW_H * 2) + 22 + 74;
+    const W = PAD * 2 + CARD_W;
+    const H = PAD + cardH + PAD;
+
+    const canvas = document.createElement('canvas');
+    canvas.width = W * S;
+    canvas.height = H * S;
+    const ctx = canvas.getContext('2d');
+    ctx.scale(S, S);
+    ctx.textBaseline = 'alphabetic';
+
+    ctx.fillStyle = '#eef2f9';
+    ctx.fillRect(0, 0, W, H);
+
+    ctx.save();
+    ctx.shadowColor = 'rgba(15,23,42,.20)';
+    ctx.shadowBlur = 34;
+    ctx.shadowOffsetY = 14;
+    roundRect(ctx, PAD, PAD, CARD_W, cardH, 24);
+    ctx.fillStyle = '#ffffff';
+    ctx.fill();
+    ctx.restore();
+
+    ctx.save();
+    roundRect(ctx, PAD, PAD, CARD_W, cardH, 24);
+    ctx.clip();
+    const grad = ctx.createLinearGradient(PAD, PAD, PAD + CARD_W, PAD + HEADER_H);
+    grad.addColorStop(0, '#132238');
+    grad.addColorStop(0.56, '#1e3a5f');
+    grad.addColorStop(1, '#25507e');
+    ctx.fillStyle = grad;
+    ctx.fillRect(PAD, PAD, CARD_W, HEADER_H);
+    ctx.restore();
+
+    const hx = PAD + BODY_PAD;
+    const hMaxW = CARD_W - BODY_PAD * 2;
+
+    ctx.fillStyle = 'rgba(168,196,226,.92)';
+    ctx.font = '700 12px ' + FAMILY;
+    drawTracked(ctx, 'PROGRAMA DE REUNIONES', hx, PAD + 44, 3.2);
+
+    const cong = (state.congregation || 'Congregación').trim() || 'Congregación';
+    fitFont(ctx, cong, hMaxW, 36, '700', FAMILY);
+    ctx.fillStyle = '#ffffff';
+    ctx.textAlign = 'left';
+    ctx.fillText(cong, hx, PAD + 92);
+
+    ctx.fillStyle = '#bfd4ea';
+    ctx.font = '500 20px ' + FAMILY;
+    ctx.fillText(monthTitle(state.month), hx, PAD + 128);
+
+    const x0 = PAD + BODY_PAD;
+    const colX = [x0];
+    for (let i = 0; i < COLS.length; i++) colX.push(colX[i] + COLS[i]);
+
+    ctx.fillStyle = '#f2f5fa';
+    ctx.fillRect(x0, tableTop, TABLE_W, THEAD_H);
+
+    ROLES.forEach(function (role, i) {
+      const cx = colX[i + 1] + COLS[i + 1] / 2;
+      ctx.fillStyle = role.color;
+      ctx.font = '700 11.5px ' + FAMILY;
+      drawTracked(ctx, role.label.toUpperCase(), cx, tableTop + 34, 1.5, 'center');
+    });
+    ctx.fillStyle = '#64748b';
+    ctx.font = '700 11.5px ' + FAMILY;
+    drawTracked(ctx, 'DÍA', colX[0] + 22, tableTop + 34, 1.5);
+
+    let y = tableTop + THEAD_H;
+    let rowIndex = 0;
+
+    weeks.forEach(function (weekKey) {
+      const sched = state.weeks[weekKey];
+      if (!sched) return;
+
+      ctx.fillStyle = '#f4f7fc';
+      ctx.fillRect(x0, y, TABLE_W, BAND_H);
+      ctx.fillStyle = '#5f7089';
+      ctx.font = '700 12.5px ' + FAMILY;
+      drawTracked(ctx, weekRangeLabel(weekKey).toUpperCase(), x0 + 22, y + 25, 0.8);
+      y += BAND_H;
+
+      MEETINGS.forEach(function (m) {
+        if (rowIndex % 2 === 1) {
+          ctx.fillStyle = '#fbfcfe';
+          ctx.fillRect(x0, y, TABLE_W, ROW_H);
+        }
+
+        const date = addDays(parseYMD(weekKey), m.offset);
+        ctx.textAlign = 'left';
+        ctx.fillStyle = '#16233a';
+        ctx.font = '700 20px ' + FAMILY;
+        ctx.fillText(m.name, colX[0] + 22, y + ROW_H / 2 - 4);
+        ctx.fillStyle = '#7c8ba1';
+        ctx.font = '500 13.5px ' + FAMILY;
+        ctx.fillText(longDate(date), colX[0] + 22, y + ROW_H / 2 + 18);
+
+        ROLES.forEach(function (role, ri) {
+          const names = (sched[m.key][role.key] || []).filter(Boolean);
+          const cx = colX[ri + 1] + COLS[ri + 1] / 2;
+          const maxW = COLS[ri + 1] - 26;
+          ctx.textAlign = 'center';
+
+          if (!names.length) {
+            ctx.fillStyle = '#cbd5e1';
+            ctx.font = '500 17px ' + FAMILY;
+            ctx.fillText('—', cx, y + ROW_H / 2 + 6);
+            return;
+          }
+          names.forEach(function (name, ni) {
+            const ny = y + ROW_H / 2 + (ni - (names.length - 1) / 2) * LINE_H + 6;
+            fitFont(ctx, name, maxW, 18.5, '600', FAMILY);
+            ctx.fillStyle = '#1e293b';
+            ctx.fillText(name, cx, ny);
+          });
+        });
+
+        ctx.strokeStyle = '#eef2f7';
+        ctx.lineWidth = 1;
+        for (let i = 1; i < colX.length - 1; i++) {
+          ctx.beginPath();
+          ctx.moveTo(colX[i], y);
+          ctx.lineTo(colX[i], y + ROW_H);
+          ctx.stroke();
+        }
+        ctx.strokeStyle = '#eef2f7';
+        ctx.beginPath();
+        ctx.moveTo(x0, y + ROW_H);
+        ctx.lineTo(x0 + TABLE_W, y + ROW_H);
+        ctx.stroke();
+
+        y += ROW_H;
+        rowIndex++;
+      });
+    });
+
+    ctx.strokeStyle = '#eef2f7';
+    ctx.beginPath();
+    ctx.moveTo(x0, footerTop);
+    ctx.lineTo(x0 + TABLE_W, footerTop);
+    ctx.stroke();
+
+    const notes = (state.notes[state.month] || '').trim();
+    if (notes) {
+      ctx.textAlign = 'left';
+      ctx.fillStyle = '#64748b';
+      ctx.font = '500 15px ' + FAMILY;
+      ctx.fillText(ellipsize(ctx, notes, TABLE_W - 240), x0, footerTop + 34);
+    }
+
+    ctx.textAlign = 'right';
+    ctx.fillStyle = '#9aa8ba';
+    ctx.font = '500 12.5px ' + FAMILY;
+    ctx.fillText('Generado el ' + todayLabel(), x0 + TABLE_W, footerTop + 34);
+
+    const filename = 'programa-' + state.month + '.jpg';
+    canvas.toBlob(function (blob) {
+      if (!blob) { toast('No se pudo generar la imagen'); return; }
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(function () { URL.revokeObjectURL(url); }, 4000);
+      toast('JPG del mes descargado');
+    }, 'image/jpeg', 0.94);
+  }
+
+  /* ============================================================
+     9. INICIO
+     ============================================================ */
+
+  load();
+  ensureMonth();
+  bindEvents();
+  render();
+})();
+</script>
+</body>
+</html>
