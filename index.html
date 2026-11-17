@@ -417,10 +417,11 @@ details.help li{margin-bottom:4px}
       <section class="panel">
         <h3>Compartir y respaldar</h3>
         <div style="display:grid;gap:8px">
-          <button class="btn wsp tiny" id="shareBtn" type="button" style="display:none">
+          <button class="btn wsp tiny" id="shareLinkBtn" type="button">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-            Compartir app + mis datos
+            Compartir link
           </button>
+          <button class="btn ghost tiny" id="shareLinkDataBtn" type="button">Compartir link + mis datos</button>
           <button class="btn primary tiny" id="sendDataBtn" type="button">Descargar app + mis datos</button>
           <button class="btn ghost tiny" id="sendAppBtn" type="button">Descargar app (sin datos)</button>
           <div style="display:flex;gap:8px;flex-wrap:wrap">
@@ -432,11 +433,11 @@ details.help li{margin-bottom:4px}
         <details class="help">
           <summary>Qué hace cada botón</summary>
           <ul>
-            <li><b>App + mis datos</b>: un solo archivo con el programa y tu mes cargado. Al abrirlo, le pregunta a la otra persona si quiere usar tus datos (si dice que no, no se le cambia nada).</li>
-            <li><b>Compartir</b>: lo manda por el menú del sistema (WhatsApp, correo, etc.). Aparece solo si el dispositivo lo permite.</li>
-            <li><b>App sin datos</b>: el programa con la lista de publicadores y ancianos, pero sin ninguna asignación. Cada uno arma su mes.</li>
-            <li><b>Guardar copia</b>: un archivo chiquito con tus datos, para respaldo o para pasar a otro dispositivo.</li>
-            <li><b>Restaurar copia</b>: carga una copia guardada y reemplaza lo que haya en este dispositivo.</li>
+            <li><b>Compartir link</b>: manda la dirección del programa. La otra persona lo abre con sus propios datos (o de fábrica si es la primera vez).</li>
+            <li><b>Compartir link + mis datos</b>: la dirección lleva tus datos adentro. Al abrirla, pregunta si los quiere cargar. Viaja en el link, no por ningún servidor.</li>
+            <li><b>App + mis datos</b>: un archivo con el programa y tu mes cargado. Al abrirlo, también pregunta antes de reemplazar.</li>
+            <li><b>App sin datos</b>: el programa con la lista de publicadores y ancianos, pero sin ninguna asignación.</li>
+            <li><b>Guardar copia</b> / <b>Restaurar copia</b>: respaldo en un archivo chiquito, para mover los datos entre dispositivos.</li>
           </ul>
         </details>
       </section>
@@ -651,7 +652,7 @@ details.help li{margin-bottom:4px}
     if (!el) return;
     if (storageOK) {
       el.textContent = 'Los cambios se guardan solo en este navegador y dispositivo. ' +
-        'Para pasar todo a otro equipo usá «Descargar app + mis datos» o «Guardar copia».';
+        'Para pasar todo a otro equipo usá «Compartir link + mis datos» o «Guardar copia».';
       el.style.color = '';
     } else {
       el.textContent = 'Este navegador no permite guardar datos (todo se pierde al cerrar). ' +
@@ -703,9 +704,11 @@ details.help li{margin-bottom:4px}
     const clToast = clone.querySelector('#toast');
     if (clToast) clToast.classList.remove('show');
 
-    // El botón de compartir se muestra recién si el dispositivo que abre el archivo lo soporta.
-    const clShare = clone.querySelector('#shareBtn');
-    if (clShare) clShare.style.display = 'none';
+    // Los botones de link solo sirven cuando la página está publicada (http/https).
+    ['#shareLinkBtn', '#shareLinkDataBtn'].forEach(function (sel) {
+      const el = clone.querySelector(sel);
+      if (el) el.style.display = 'none';
+    });
 
     if (embedded) {
       const script = document.createElement('script');
@@ -783,6 +786,136 @@ details.help li{margin-bottom:4px}
     } catch (e) {
       exportAppWithData();
     }
+  }
+
+  /* ---------- Compartir por link (los datos viajan en el # de la URL) ---------- */
+
+  const ONLINE = /^https?:$/.test(location.protocol);
+
+  function pageUrl() {
+    return location.origin + location.pathname;
+  }
+
+  function toB64url(bytes) {
+    let bin = '';
+    const chunk = 0x8000;
+    for (let i = 0; i < bytes.length; i += chunk) {
+      bin += String.fromCharCode.apply(null, bytes.subarray(i, i + chunk));
+    }
+    return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  }
+
+  function fromB64url(str) {
+    const s = str.replace(/-/g, '+').replace(/_/g, '/');
+    const pad = s.length % 4 ? '='.repeat(4 - (s.length % 4)) : '';
+    const bin = atob(s + pad);
+    const out = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+    return out;
+  }
+
+  async function gzipBytes(bytes) {
+    if (typeof CompressionStream !== 'function') return null;
+    try {
+      const stream = new Blob([bytes]).stream().pipeThrough(new CompressionStream('gzip'));
+      return new Uint8Array(await new Response(stream).arrayBuffer());
+    } catch (e) { return null; }
+  }
+
+  async function gunzipBytes(bytes) {
+    if (typeof DecompressionStream !== 'function') return null;
+    try {
+      const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));
+      return new Uint8Array(await new Response(stream).arrayBuffer());
+    } catch (e) { return null; }
+  }
+
+  async function buildLinkPayload() {
+    const json = JSON.stringify({ t: new Date().toISOString(), l: snapshot().label, d: state });
+    const bytes = new TextEncoder().encode(json);
+    const gz = await gzipBytes(bytes);
+    const useGz = !!gz && gz.length < bytes.length;
+    return (useGz ? 'z' : 'd') + '=' + toB64url(useGz ? gz : bytes);
+  }
+
+  async function readLinkPayload(payload) {
+    const mode = payload.charAt(0);
+    const body = fromB64url(payload.slice(2));
+    const bytes = mode === 'z' ? await gunzipBytes(body) : body;
+    if (!bytes || !bytes.length) return null;
+    const obj = JSON.parse(new TextDecoder().decode(bytes));
+    return obj && obj.d ? obj : null;
+  }
+
+  async function shareOrCopy(url, text) {
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: 'Programa de reuniones', text: text, url: url });
+        return 'shared';
+      } catch (e) {
+        if (e && e.name === 'AbortError') return 'cancelled';
+      }
+    }
+    try {
+      await navigator.clipboard.writeText(url);
+      toast('Link copiado al portapapeles');
+      return 'copied';
+    } catch (e) { /* sigue abajo */ }
+    window.prompt('Copiá el link:', url);
+    return 'prompt';
+  }
+
+  function shareLink() {
+    shareOrCopy(pageUrl(), 'Programa de reuniones — Sonido, Micrófono, Plataforma y Acomodadores');
+  }
+
+  async function shareLinkWithData() {
+    let url = pageUrl();
+    try {
+      url += '#' + await buildLinkPayload();
+    } catch (e) {
+      toast('No se pudo armar el link');
+      return;
+    }
+    if (url.length > 3500) {
+      const go = window.confirm(
+        'El link con tus datos queda largo (' + url.length + ' caracteres) y algunos programas lo cortan.\n\n' +
+        '¿Mandar el link igual?\n\n' +
+        'Aceptar = link · Cancelar = archivo con los datos');
+      if (!go) { shareAppWithData(); return; }
+    }
+    await shareOrCopy(url, 'Programa de reuniones con mis datos');
+  }
+
+  /* Al abrir un link que trae datos, pregunta antes de reemplazar nada. */
+  async function maybeLoadFromLink() {
+    const raw = (location.hash || '').replace(/^#/, '');
+    if (!/^[zd]=./.test(raw)) return;
+
+    let obj = null;
+    try { obj = await readLinkPayload(raw); } catch (e) { obj = null; }
+    if (!obj) {
+      toast('El link trae datos que no se pudieron leer');
+      return;
+    }
+
+    const skipKey = 'link-no:' + raw.slice(0, 32);
+    try { if (sessionStorage.getItem(skipKey)) return; } catch (e) {}
+
+    const ok = window.confirm(
+      'Este link viene con los datos de:\n\n' + (obj.l || 'Programa de reuniones') +
+      '\n\n¿Querés cargarlos en este dispositivo? Se reemplazan los datos guardados acá.');
+    if (!ok) {
+      try { sessionStorage.setItem(skipKey, '1'); } catch (e) {}
+      return;
+    }
+
+    normalize(obj.d);
+    ensureMonth();
+    save();
+    render();
+    try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
+    toast('Datos cargados del link');
   }
 
   function importBackup(file) {
@@ -1439,13 +1572,18 @@ details.help li{margin-bottom:4px}
     });
     $('#rosterBody').addEventListener('change', onRosterName);
     $('#rosterBody').addEventListener('click', onRosterClick);
+    window.addEventListener('hashchange', maybeLoadFromLink);
     $('#backupBtn').addEventListener('click', exportBackup);
     $('#sendAppBtn').addEventListener('click', exportApp);
     $('#sendDataBtn').addEventListener('click', exportAppWithData);
-    if (shareSupported()) {
-      const sb = $('#shareBtn');
-      sb.style.display = '';
-      sb.addEventListener('click', shareAppWithData);
+    if (!ONLINE) {
+      ['#shareLinkBtn', '#shareLinkDataBtn'].forEach(function (sel) {
+        const el = $(sel);
+        if (el) el.style.display = 'none';
+      });
+    } else {
+      $('#shareLinkBtn').addEventListener('click', shareLink);
+      $('#shareLinkDataBtn').addEventListener('click', shareLinkWithData);
     }
     $('#restoreBtn').addEventListener('click', function () { $('#restoreFile').click(); });
     $('#restoreFile').addEventListener('change', function (ev) {
@@ -1717,6 +1855,7 @@ details.help li{margin-bottom:4px}
   ensureMonth();
   bindEvents();
   render();
+  maybeLoadFromLink();
 })();
 </script>
 </body>
