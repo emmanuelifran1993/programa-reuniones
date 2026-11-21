@@ -7,34 +7,33 @@
 <title>Programa mensual de reuniones</title>
 <style>
 :root{
-  --bg:#eef2f9;
+  --bg:#f7f8fa;
   --card:#ffffff;
-  --ink:#0f172a;
-  --ink-2:#334155;
-  --muted:#64748b;
-  --faint:#94a3b8;
-  --line:#e2e8f0;
-  --line-soft:#eef2f7;
-  --accent:#2563eb;
-  --snd:#0e7490;
-  --mic:#7c3aed;
-  --plat:#b45309;
-  --aco:#047857;
-  --radius:20px;
+  --ink:#111827;
+  --ink-2:#374151;
+  --muted:#6b7280;
+  --faint:#9ca3af;
+  --line:#e9ebf0;
+  --line-soft:#f2f3f6;
+  --navy:#002855;
+  --navy-2:#013a76;
+  --wine:#800020;
+  --snd:#800020;
+  --mic:#4b0082;
+  --plat:#0056b3;
+  --aco:#333333;
+  --radius:12px;
 }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
 body{
   font-family:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
   color:var(--ink);
-  background:
-    radial-gradient(1100px 520px at 8% -12%, #e0e7ff 0%, rgba(224,231,255,0) 62%),
-    radial-gradient(900px 480px at 105% -5%, #d7f5e9 0%, rgba(215,245,233,0) 58%),
-    var(--bg);
+  background:var(--bg);
   min-height:100vh;
   -webkit-font-smoothing:antialiased;
 }
-.page{max-width:1240px;margin:0 auto;padding:26px 22px 56px}
+.page{max-width:1240px;margin:0 auto;padding:28px 22px 60px}
 
 /* ---------- Encabezado ---------- */
 .hero{
@@ -43,20 +42,20 @@ body{
 }
 .eyebrow{
   margin:0 0 8px;font-size:11px;font-weight:700;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--muted);
+  text-transform:uppercase;color:var(--wine);
 }
-.hero h1{margin:0;font-size:30px;line-height:1.12;letter-spacing:-.02em;font-weight:700}
+.hero h1{margin:0;font-size:29px;line-height:1.12;letter-spacing:-.02em;font-weight:700;color:#0b1f3a}
 .hero .tagline{margin:8px 0 0;font-size:14px;color:var(--muted)}
 .hero-tools{display:flex;flex-direction:column;align-items:flex-end;gap:10px}
 .weeknav{
   display:flex;align-items:center;gap:4px;background:#fff;border:1px solid var(--line);
-  border-radius:14px;padding:5px;box-shadow:0 1px 2px rgba(15,23,42,.05);
+  border-radius:12px;padding:5px;box-shadow:0 1px 2px rgba(17,24,39,.04);
 }
 .iconbtn{
-  width:34px;height:34px;border:0;border-radius:9px;background:#f1f5f9;color:var(--ink-2);
+  width:34px;height:34px;border:0;border-radius:8px;background:#f4f6f9;color:var(--navy);
   font-size:19px;line-height:1;cursor:pointer;transition:background .15s;flex:0 0 auto;
 }
-.iconbtn:hover{background:#e2e8f0}
+.iconbtn:hover{background:#e8ecf2}
 .weekinfo{padding:0 6px;text-align:center;min-width:206px}
 .weeklabel{font-size:13.5px;font-weight:600;color:var(--ink);white-space:nowrap}
 .dateinput{
@@ -74,18 +73,18 @@ body{
 }
 .btn:active{transform:translateY(1px)}
 .btn.primary{
-  background:linear-gradient(180deg,#3b7bf5,#2158c9);color:#fff;
-  box-shadow:0 10px 20px -10px rgba(37,99,235,.85);
+  background:var(--navy);color:#fff;
+  box-shadow:0 10px 20px -14px rgba(0,40,85,.9);
 }
-.btn.primary:hover{filter:brightness(1.06)}
+.btn.primary:hover{background:var(--navy-2)}
 .btn.ghost{background:#fff;border:1px solid var(--line);color:var(--ink-2)}
-.btn.ghost:hover{background:#f8fafc}
-.btn.tiny{padding:7px 11px;font-size:11.5px;border-radius:9px}
+.btn.ghost:hover{background:#f7f8fa}
+.btn.tiny{padding:7px 11px;font-size:11.5px;border-radius:8px}
 .btn.wsp{
-  background:linear-gradient(180deg,#25d366,#17954a);color:#fff;
-  box-shadow:0 10px 20px -10px rgba(37,211,102,.9);
+  background:#1faa59;color:#fff;
+  box-shadow:0 10px 20px -14px rgba(31,170,89,.9);
 }
-.btn.wsp:hover{filter:brightness(1.05)}
+.btn.wsp:hover{background:#178f4a}
 .btn.wsp svg{width:17px;height:17px;fill:currentColor;flex:0 0 auto}
 
 /* ---------- Layout ---------- */
@@ -102,83 +101,81 @@ body{
 
 /* ---------- Poster ---------- */
 .poster{
-  background:var(--card);border:1px solid #e7edf6;border-radius:var(--radius);
-  box-shadow:0 22px 48px -24px rgba(15,23,42,.32),0 2px 6px rgba(15,23,42,.04);
+  background:var(--card);border:1px solid #edeff3;border-radius:var(--radius);
+  box-shadow:0 1px 2px rgba(17,24,39,.04),0 18px 44px -30px rgba(17,24,39,.45);
   overflow:hidden;
 }
 .poster-head{
-  background:linear-gradient(135deg,#132238 0%,#1e3a5f 56%,#25507e 100%);
-  color:#fff;padding:25px 32px 23px;position:relative;
-}
-.poster-head::after{
-  content:"";position:absolute;inset:0;pointer-events:none;
-  background:radial-gradient(520px 160px at 88% 0%,rgba(120,190,255,.22),transparent 70%);
+  background:var(--navy);color:#fff;
+  padding:21px 27px 18px;border-bottom:3px solid var(--wine);
 }
 .p-eyebrow{
-  margin:0 0 6px;font-size:10.5px;font-weight:700;letter-spacing:.2em;
-  text-transform:uppercase;color:#a8c4e2;position:relative;z-index:1;
+  margin:0 0 8px;font-size:13px;font-weight:600;letter-spacing:.07em;
+  text-transform:uppercase;color:rgba(255,255,255,.86);
 }
 .cong-input{
-  position:relative;z-index:1;display:block;width:100%;max-width:100%;
+  display:block;width:100%;max-width:100%;
   border:0;background:transparent;color:#fff;
-  font-family:inherit;font-size:25px;font-weight:650;letter-spacing:-.01em;
-  padding:3px 8px;margin-left:-8px;border-radius:9px;transition:background .15s;
+  font-family:inherit;font-size:21px;font-weight:700;line-height:1.25;letter-spacing:-.005em;
+  padding:2px 8px;margin-left:-8px;border-radius:7px;transition:background .15s;
 }
-.cong-input:hover{background:rgba(255,255,255,.08)}
-.cong-input:focus{outline:none;background:rgba(255,255,255,.13)}
-.cong-input::placeholder{color:rgba(255,255,255,.42)}
-.p-week{position:relative;z-index:1;margin:5px 0 0;font-size:14.5px;font-weight:500;color:#bfd4ea}
-.poster-body{padding:22px 26px 20px}
-.table-scroll{overflow-x:auto;margin:0 -4px;padding:0 4px}
-.sched{width:100%;border-collapse:collapse;table-layout:fixed;min-width:620px}
+.cong-input:hover{background:rgba(255,255,255,.07)}
+.cong-input:focus{outline:none;background:rgba(255,255,255,.11)}
+.cong-input::placeholder{color:rgba(255,255,255,.45)}
+.p-week{margin:5px 0 0;font-size:14.5px;font-weight:400;color:rgba(255,255,255,.84)}
+.poster-body{padding:0}
+.table-scroll{overflow-x:auto}
+.sched{width:100%;border-collapse:collapse;table-layout:fixed;min-width:600px}
 .sched thead th{
-  padding:11px 6px 12px;border-bottom:1px solid var(--line);
-  font-size:10.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;
-  color:var(--muted);text-align:center;
+  padding:16px 8px 15px;background:#fff;border-bottom:1px solid #f0f1f4;
+  font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+  color:var(--ink);text-align:center;white-space:nowrap;
 }
-.sched thead th:first-child{text-align:left;padding-left:10px}
+.sched thead th:first-child{text-align:left;padding-left:20px}
 .h-S{color:var(--snd)}
 .h-M{color:var(--mic)}
 .h-P{color:var(--plat)}
 .h-A{color:var(--aco)}
 .sched tbody th,
 .sched tbody td{
-  border-bottom:1px solid var(--line-soft);padding:11px 6px;
+  border-bottom:1px solid #f2f3f5;padding:19px 8px;
   text-align:center;vertical-align:middle;
 }
-.sched tbody th{text-align:left;padding-left:10px}
+.sched tbody th{text-align:left;padding-left:20px}
+.sched tbody tr:last-child th,
+.sched tbody tr:last-child td{border-bottom:0}
 .sched tbody tr.weekrow th{
-  background:#f5f8fc;border-bottom:1px solid #e8eef7;
-  padding:8px 10px;text-align:left;
-  font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#5f7089;
+  background:#f9fafb;border-bottom:1px solid #f0f1f4;
+  padding:19px 20px;text-align:left;
+  font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);
 }
-.dayname{display:block;font-size:16px;font-weight:700;color:var(--ink);letter-spacing:-.01em}
-.daydate{display:block;margin-top:2px;font-size:11.5px;font-weight:500;color:var(--faint)}
+.dayname{display:block;font-size:14.5px;font-weight:700;color:var(--ink);line-height:1.25}
+.daydate{display:block;margin-top:5px;font-size:11px;font-weight:400;color:var(--muted)}
 .slot{
-  display:block;width:100%;padding:7px 5px;border:1px solid transparent;border-radius:9px;
+  display:block;width:100%;padding:2px 4px;border:1px solid transparent;border-radius:6px;
   background:transparent;color:var(--ink);text-align:center;text-align-last:center;
-  font:600 13.5px/1.3 inherit;cursor:pointer;
+  font:400 14px/1.5 inherit;cursor:pointer;
   appearance:none;-webkit-appearance:none;text-overflow:ellipsis;
   transition:background .12s,border-color .12s,box-shadow .12s;
 }
-.slot + .slot{margin-top:2px}
-.slot:hover{background:#f1f5f9;border-color:#e2e8f0}
-.slot:focus{outline:none;background:#fff;border-color:#93c5fd;box-shadow:0 0 0 3px #dbeafe}
-.slot.empty{color:#cbd5e1;font-weight:500}
-.slot.long{font-size:12px;padding-left:2px;padding-right:2px;letter-spacing:-.01em}
+.slot + .slot{margin-top:1px}
+.slot:hover{background:#f4f6f9;border-color:#e9ebf0}
+.slot:focus{outline:none;background:#fff;border-color:#9db4cd;box-shadow:0 0 0 3px #e3ebf4}
+.slot.empty{color:#c4c9d2}
+.slot.long{font-size:13px;padding-left:2px;padding-right:2px;letter-spacing:-.01em}
 .poster-foot{
   display:flex;gap:16px;align-items:center;justify-content:space-between;
-  border-top:1px solid var(--line-soft);margin:14px -2px 0;padding:12px 2px 0;
+  border-top:1px solid #f2f3f5;padding:11px 20px 13px;
   flex-wrap:wrap;
 }
 .note-input{
-  flex:1 1 240px;min-width:0;border:0;background:transparent;color:var(--ink-2);
-  font:500 12.5px/1.4 inherit;padding:5px 8px;border-radius:8px;
+  flex:1 1 240px;min-width:0;border:0;background:transparent;color:var(--muted);
+  font:400 12px/1.4 inherit;padding:4px 6px;border-radius:6px;
 }
-.note-input::placeholder{color:#b6c2d2}
-.note-input:hover{background:#f8fafc}
-.note-input:focus{outline:none;background:#f8fafc}
-.stamp{font-size:11px;color:var(--faint);white-space:nowrap;flex:0 0 auto}
+.note-input::placeholder{color:#c1c6cf}
+.note-input:hover{background:#f7f8fa}
+.note-input:focus{outline:none;background:#f7f8fa}
+.stamp{font-size:10.5px;color:#b3b8c1;white-space:nowrap;flex:0 0 auto}
 
 /* ---------- Paneles ---------- */
 .panel{
@@ -198,12 +195,12 @@ body{
   background:#fff;color:var(--ink);font:500 13.5px/1.3 inherit;
 }
 .field select:focus,
-.field input[type=text]:focus{outline:none;border-color:#93c5fd;box-shadow:0 0 0 3px #dbeafe}
+.field input[type=text]:focus{outline:none;border-color:#9db4cd;box-shadow:0 0 0 3px #e3ebf4}
 .checkline{
   display:flex;align-items:center;gap:9px;font-size:12.5px;font-weight:500;color:var(--ink-2);
   cursor:pointer;padding:2px 0;
 }
-.checkline input{width:15px;height:15px;accent-color:#2563eb;cursor:pointer;margin:0}
+.checkline input{width:15px;height:15px;accent-color:#002855;cursor:pointer;margin:0}
 .hint{margin:6px 0 0;font-size:11.5px;line-height:1.45;color:var(--faint)}
 .avail-group + .avail-group{margin-top:12px}
 .avail-group h4,.rgroup h4{
@@ -220,8 +217,8 @@ body{
   text-decoration:line-through;text-decoration-thickness:1px;transition:.13s;
   user-select:none;
 }
-.chip input:checked + span{background:#eef4ff;border-color:#c9d8f9;color:#274690;text-decoration:none}
-.chip input:focus-visible + span{box-shadow:0 0 0 3px #dbeafe}
+.chip input:checked + span{background:#eef2f8;border-color:#ccd9e6;color:#002855;text-decoration:none}
+.chip input:focus-visible + span{box-shadow:0 0 0 3px #e3ebf4}
 .chip em{font-style:normal;font-size:9.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#b7a06a}
 .chip input:checked + span em{color:#8a7338}
 
@@ -250,15 +247,15 @@ details[open] summary .caret{transform:rotate(180deg)}
   padding:7px 9px;font:500 12.5px/1.2 inherit;color:var(--ink);
 }
 .pname:hover{border-color:var(--line)}
-.pname:focus{outline:none;border-color:#93c5fd;box-shadow:0 0 0 3px #dbeafe;background:#fff}
+.pname:focus{outline:none;border-color:#9db4cd;box-shadow:0 0 0 3px #e3ebf4;background:#fff}
 .pname::placeholder{color:#b6c2d2}
 .skills{display:flex;gap:3px;flex:0 0 auto}
 .sk{
   width:21px;height:21px;padding:0;border:1px solid var(--line);border-radius:6px;
   background:#fff;color:#cbd5e1;font:700 9.5px/1 inherit;cursor:pointer;transition:.12s;
 }
-.sk:hover{border-color:#c9d8f9}
-.sk.on{background:#eef4ff;border-color:#c9d8f9;color:#274690}
+.sk:hover{border-color:#ccd9e6}
+.sk.on{background:#eef2f8;border-color:#ccd9e6;color:#002855}
 .del{
   flex:0 0 auto;width:21px;height:21px;padding:0;border:0;border-radius:6px;
   background:transparent;color:#cbd5e1;font-size:15px;line-height:1;cursor:pointer;
@@ -301,12 +298,18 @@ details.help li{margin-bottom:4px}
 
 @media (max-width:560px){
   .page{padding:18px 14px 44px}
-  .hero h1{font-size:24px}
-  .poster-head{padding:20px 20px 18px}
-  .cong-input{font-size:21px}
-  .poster-body{padding:16px 14px 16px}
-  .slot{font-size:12.5px;padding:6px 3px}
-  .dayname{font-size:14.5px}
+  .hero h1{font-size:23px}
+  .poster-head{padding:20px 18px 18px}
+  .cong-input{font-size:20px}
+  .sched thead th{padding:13px 4px 12px;font-size:9.5px;letter-spacing:.03em}
+  .sched thead th:first-child,
+  .sched tbody th{padding-left:16px}
+  .sched tbody th,.sched tbody td{padding:14px 4px}
+  .sched tbody tr.weekrow th{padding:11px 16px;font-size:9.5px}
+  .slot{font-size:12.5px;padding:2px 2px}
+  .dayname{font-size:13px}
+  .daydate{font-size:10.5px;margin-top:4px}
+  .poster-foot{padding:10px 16px 12px}
 }
 </style>
 </head>
@@ -316,7 +319,7 @@ details.help li{margin-bottom:4px}
     <div>
       <p class="eyebrow">Programa mensual</p>
       <h1>Reuniones de la congregación</h1>
-      <p class="tagline">Sonido · Micrófono · Plataforma · Acomodadores</p>
+      <p class="tagline">Audio &amp; Video · Micrófono · Plataforma · Acomodadores</p>
     </div>
     <div class="hero-tools">
       <div class="weeknav">
@@ -346,16 +349,16 @@ details.help li{margin-bottom:4px}
           <div class="table-scroll">
             <table class="sched">
               <colgroup>
-                <col style="width:15%">
-                <col style="width:21%">
-                <col style="width:21%">
-                <col style="width:18%">
-                <col style="width:25%">
+                <col style="width:13%">
+                <col style="width:22%">
+                <col style="width:20%">
+                <col style="width:22%">
+                <col style="width:23%">
               </colgroup>
               <thead>
                 <tr>
                   <th scope="col">Día</th>
-                  <th scope="col" class="h-S">Sonido</th>
+                  <th scope="col" class="h-S">Audio &amp; Video</th>
                   <th scope="col" class="h-M">Micrófono</th>
                   <th scope="col" class="h-P">Plataforma</th>
                   <th scope="col" class="h-A">Acomodadores</th>
@@ -445,7 +448,7 @@ details.help li{margin-bottom:4px}
       <section class="panel">
         <h3>Reglas aplicadas</h3>
         <ul style="margin:0;padding-left:16px;font-size:11.5px;line-height:1.65;color:var(--muted)">
-          <li>2 en Sonido y 2 en Micrófono por reunión.</li>
+          <li>2 en Audio &amp; Video y 2 en Micrófono por reunión.</li>
           <li>Se respeta lo que cada uno puede hacer (S, M, P, A).</li>
           <li>Los ancianos solo entran como reemplazo.</li>
           <li>Nadie repite dentro de la misma reunión.</li>
@@ -497,19 +500,21 @@ details.help li{margin-bottom:4px}
   ];
 
   const ROLES = [
-    { key: 'S', label: 'Sonido',       color: '#0e7490', count: 2 },
-    { key: 'M', label: 'Micrófono',    color: '#7c3aed', count: 2 },
-    { key: 'P', label: 'Plataforma',   color: '#b45309', count: 1 },
-    { key: 'A', label: 'Acomodadores', color: '#047857', count: 1 }
+    { key: 'S', label: 'Audio & Video', color: '#800020', count: 2 },
+    { key: 'M', label: 'Micrófono',    color: '#4b0082', count: 2 },
+    { key: 'P', label: 'Plataforma',   color: '#0056b3', count: 1 },
+    { key: 'A', label: 'Acomodadores', color: '#333333', count: 1 }
   ];
   const ROLE_COUNT  = { S: 2, M: 2, P: 1, A: 1 };
   const ROLE_OFFSET = { S: 0, P: 2, M: 1, A: 3 };
   const ROLE_KEYS   = ['S', 'M', 'P', 'A'];
-  const SKILL_NAMES = { S: 'Sonido', M: 'Micrófono', P: 'Plataforma', A: 'Acomodador' };
+  const SKILL_NAMES = { S: 'Audio & Video', M: 'Micrófono', P: 'Plataforma', A: 'Acomodador' };
 
+  // La clave interna 'sat' se mantiene igual a propósito: así los meses ya
+  // guardados en el navegador se siguen leyendo aunque ahora la reunión sea el domingo.
   const MEETINGS = [
     { key: 'thu', name: 'Jueves', offset: 0 },
-    { key: 'sat', name: 'Sábado', offset: 2 }
+    { key: 'sat', name: 'Domingo', offset: 3 }
   ];
 
   const MONTHS = ['enero','febrero','marzo','abril','mayo','junio','julio',
@@ -561,13 +566,13 @@ details.help li{margin-bottom:4px}
   function weekRangeLabel(thuYMD) {
     const thu = parseYMD(thuYMD);
     const mon = addDays(thu, -3);
-    const sat = addDays(thu, 2);
-    if (mon.getMonth() === sat.getMonth()) {
-      return 'Semana del ' + mon.getDate() + ' al ' + sat.getDate() +
-             ' de ' + MONTHS[sat.getMonth()];
+    const sun = addDays(thu, 3);
+    if (mon.getMonth() === sun.getMonth()) {
+      return 'Semana del ' + mon.getDate() + ' al ' + sun.getDate() +
+             ' de ' + MONTHS[sun.getMonth()];
     }
     return 'Semana del ' + mon.getDate() + ' de ' + MONTHS[mon.getMonth()] +
-           ' al ' + sat.getDate() + ' de ' + MONTHS[sat.getMonth()];
+           ' al ' + sun.getDate() + ' de ' + MONTHS[sun.getMonth()];
   }
   function weeksOfMonth(mk) {
     const p = mk.split('-').map(Number);
@@ -866,7 +871,7 @@ details.help li{margin-bottom:4px}
   }
 
   function shareLink() {
-    shareOrCopy(pageUrl(), 'Programa de reuniones — Sonido, Micrófono, Plataforma y Acomodadores');
+    shareOrCopy(pageUrl(), 'Programa de reuniones — Audio & Video, Micrófono, Plataforma y Acomodadores');
   }
 
   async function shareLinkWithData() {
@@ -1108,14 +1113,14 @@ details.help li{margin-bottom:4px}
 
   function buildSelect(role, weekKey, meetingKey, index, value) {
     const sel = document.createElement('select');
-    sel.className = 'slot' + (value ? '' : ' empty') + (value && value.length > 13 ? ' long' : '');
+    sel.className = 'slot' + (value ? '' : ' empty') + (value && value.length > 15 ? ' long' : '');
     sel.dataset.role = role;
     sel.dataset.week = weekKey;
     sel.dataset.meeting = meetingKey;
     sel.dataset.index = String(index);
     const roleLabel = ROLES.filter(function (r) { return r.key === role; })[0].label;
     sel.setAttribute('aria-label', roleLabel + ' ' + weekKey + ' ' +
-      (meetingKey === 'thu' ? 'jueves' : 'sábado') + ' ' + (index + 1));
+      (meetingKey === 'thu' ? 'jueves' : 'domingo') + ' ' + (index + 1));
     sel.appendChild(buildOptions(role, value));
     sel.value = value || '';
     sel.addEventListener('change', onSlotChange);
@@ -1652,32 +1657,25 @@ details.help li{margin-bottom:4px}
     const weeks = displayedWeeks();
     const FAMILY = '"Segoe UI", system-ui, -apple-system, Arial, sans-serif';
 
-    let maxNames = 2;
-    weeks.forEach(function (k) {
-      const s = state.weeks[k];
-      if (!s) return;
-      ['thu', 'sat'].forEach(function (m) {
-        maxNames = Math.max(maxNames, s[m].A.length, s[m].S.length);
-      });
-    });
-
     const S = 2;
-    const PAD = 48;
+    const PAD = 84;
     const CARD_W = 1304;
-    const BODY_PAD = 40;
-    const TABLE_W = 1224;
-    const COLS = [184, 257, 257, 220, 306];
-    const HEADER_H = 158;
-    const GAP = 34;
-    const THEAD_H = 54;
-    const BAND_H = 40;
-    const ROW_H = Math.max(104, 26 + maxNames * 30);
-    const LINE_H = 30;
+    const HPAD = 42;
+    const BODY_PAD = 30;
+    const TABLE_W = CARD_W - BODY_PAD * 2;
+    const COLS = [164, 270, 250, 277, 283];
+    const RULE_H = 5;
+    const HEADER_H = 186;
+    const THEAD_H = 71;
+    const BAND_H = 79;
+    const ROW_H = 123;
+    const LINE_H = 37;
 
-    const tableTop = PAD + HEADER_H + GAP;
-    const tableBottom = tableTop + THEAD_H + weeks.length * (BAND_H + ROW_H * 2);
-    const footerTop = tableBottom + 22;
-    const cardH = HEADER_H + GAP + THEAD_H + weeks.length * (BAND_H + ROW_H * 2) + 22 + 74;
+    const notes = (state.notes[state.month] || '').trim();
+    const FOOT_H = notes ? 64 : 0;
+
+    const tableTop = PAD + HEADER_H;
+    const cardH = HEADER_H + THEAD_H + weeks.length * (BAND_H + ROW_H * 2) + FOOT_H;
     const W = PAD * 2 + CARD_W;
     const H = PAD + cardH + PAD;
 
@@ -1688,149 +1686,134 @@ details.help li{margin-bottom:4px}
     ctx.scale(S, S);
     ctx.textBaseline = 'alphabetic';
 
-    ctx.fillStyle = '#eef2f9';
+    ctx.fillStyle = '#f8f9fb';
     ctx.fillRect(0, 0, W, H);
 
     ctx.save();
-    ctx.shadowColor = 'rgba(15,23,42,.20)';
-    ctx.shadowBlur = 34;
-    ctx.shadowOffsetY = 14;
-    roundRect(ctx, PAD, PAD, CARD_W, cardH, 24);
+    ctx.shadowColor = 'rgba(17,24,39,.16)';
+    ctx.shadowBlur = 40;
+    ctx.shadowOffsetY = 16;
+    roundRect(ctx, PAD, PAD, CARD_W, cardH, 16);
     ctx.fillStyle = '#ffffff';
     ctx.fill();
     ctx.restore();
 
     ctx.save();
-    roundRect(ctx, PAD, PAD, CARD_W, cardH, 24);
+    roundRect(ctx, PAD, PAD, CARD_W, cardH, 16);
     ctx.clip();
-    const grad = ctx.createLinearGradient(PAD, PAD, PAD + CARD_W, PAD + HEADER_H);
-    grad.addColorStop(0, '#132238');
-    grad.addColorStop(0.56, '#1e3a5f');
-    grad.addColorStop(1, '#25507e');
-    ctx.fillStyle = grad;
-    ctx.fillRect(PAD, PAD, CARD_W, HEADER_H);
-    ctx.restore();
 
-    const hx = PAD + BODY_PAD;
-    const hMaxW = CARD_W - BODY_PAD * 2;
+    /* Cabecera azul con la línea roja */
+    ctx.fillStyle = '#002855';
+    ctx.fillRect(PAD, PAD, CARD_W, HEADER_H - RULE_H);
+    ctx.fillStyle = '#800020';
+    ctx.fillRect(PAD, PAD + HEADER_H - RULE_H, CARD_W, RULE_H);
 
-    ctx.fillStyle = 'rgba(168,196,226,.92)';
-    ctx.font = '700 12px ' + FAMILY;
-    drawTracked(ctx, 'PROGRAMA DE REUNIONES', hx, PAD + 44, 3.2);
+    const hx = PAD + HPAD;
+    ctx.fillStyle = 'rgba(255,255,255,.88)';
+    ctx.font = '600 19px ' + FAMILY;
+    drawTracked(ctx, 'PROGRAMA DE REUNIONES', hx, PAD + 57, 1.2);
 
     const cong = (state.congregation || 'Congregación').trim() || 'Congregación';
-    fitFont(ctx, cong, hMaxW, 36, '700', FAMILY);
+    fitFont(ctx, cong, CARD_W - HPAD * 2, 34, '700', FAMILY);
     ctx.fillStyle = '#ffffff';
     ctx.textAlign = 'left';
-    ctx.fillText(cong, hx, PAD + 92);
+    ctx.fillText(cong, hx, PAD + 108);
 
-    ctx.fillStyle = '#bfd4ea';
-    ctx.font = '500 20px ' + FAMILY;
-    ctx.fillText(monthTitle(state.month), hx, PAD + 128);
+    ctx.fillStyle = 'rgba(255,255,255,.84)';
+    ctx.font = '400 21px ' + FAMILY;
+    ctx.fillText(monthTitle(state.month), hx, PAD + 145);
 
+    /* Tabla */
     const x0 = PAD + BODY_PAD;
     const colX = [x0];
     for (let i = 0; i < COLS.length; i++) colX.push(colX[i] + COLS[i]);
 
-    ctx.fillStyle = '#f2f5fa';
-    ctx.fillRect(x0, tableTop, TABLE_W, THEAD_H);
-
     ROLES.forEach(function (role, i) {
       const cx = colX[i + 1] + COLS[i + 1] / 2;
       ctx.fillStyle = role.color;
-      ctx.font = '700 11.5px ' + FAMILY;
-      drawTracked(ctx, role.label.toUpperCase(), cx, tableTop + 34, 1.5, 'center');
+      ctx.font = '700 14.5px ' + FAMILY;
+      drawTracked(ctx, role.label.toUpperCase(), cx, tableTop + 40, 0.9, 'center');
     });
-    ctx.fillStyle = '#64748b';
-    ctx.font = '700 11.5px ' + FAMILY;
-    drawTracked(ctx, 'DÍA', colX[0] + 22, tableTop + 34, 1.5);
+    ctx.fillStyle = '#111827';
+    ctx.font = '700 14.5px ' + FAMILY;
+    drawTracked(ctx, 'DÍA', x0, tableTop + 40, 0.9);
+
+    ctx.fillStyle = '#f0f1f4';
+    ctx.fillRect(PAD, tableTop + THEAD_H - 1, CARD_W, 1);
 
     let y = tableTop + THEAD_H;
     let rowIndex = 0;
+    const totalRows = weeks.length * MEETINGS.length;
 
     weeks.forEach(function (weekKey) {
       const sched = state.weeks[weekKey];
       if (!sched) return;
 
-      ctx.fillStyle = '#f4f7fc';
-      ctx.fillRect(x0, y, TABLE_W, BAND_H);
-      ctx.fillStyle = '#5f7089';
-      ctx.font = '700 12.5px ' + FAMILY;
-      drawTracked(ctx, weekRangeLabel(weekKey).toUpperCase(), x0 + 22, y + 25, 0.8);
+      ctx.fillStyle = '#f9fafb';
+      ctx.fillRect(PAD, y, CARD_W, BAND_H);
+      ctx.fillStyle = '#6b7280';
+      ctx.font = '700 14.5px ' + FAMILY;
+      drawTracked(ctx, weekRangeLabel(weekKey).toUpperCase(), x0, y + 47, 0.9);
+      ctx.fillStyle = '#f0f1f4';
+      ctx.fillRect(PAD, y + BAND_H - 1, CARD_W, 1);
       y += BAND_H;
 
       MEETINGS.forEach(function (m) {
-        if (rowIndex % 2 === 1) {
-          ctx.fillStyle = '#fbfcfe';
-          ctx.fillRect(x0, y, TABLE_W, ROW_H);
-        }
-
+        const cy = y + ROW_H / 2;
         const date = addDays(parseYMD(weekKey), m.offset);
+
         ctx.textAlign = 'left';
-        ctx.fillStyle = '#16233a';
-        ctx.font = '700 20px ' + FAMILY;
-        ctx.fillText(m.name, colX[0] + 22, y + ROW_H / 2 - 4);
-        ctx.fillStyle = '#7c8ba1';
-        ctx.font = '500 13.5px ' + FAMILY;
-        ctx.fillText(longDate(date), colX[0] + 22, y + ROW_H / 2 + 18);
+        ctx.fillStyle = '#111827';
+        ctx.font = '700 20.5px ' + FAMILY;
+        ctx.fillText(m.name, x0, y + 44);
+        ctx.fillStyle = '#6b7280';
+        ctx.font = '400 16px ' + FAMILY;
+        ctx.fillText(longDate(date), x0, y + 78);
 
         ROLES.forEach(function (role, ri) {
           const names = (sched[m.key][role.key] || []).filter(Boolean);
           const cx = colX[ri + 1] + COLS[ri + 1] / 2;
-          const maxW = COLS[ri + 1] - 26;
+          const maxW = COLS[ri + 1] - 20;
           ctx.textAlign = 'center';
 
           if (!names.length) {
-            ctx.fillStyle = '#cbd5e1';
-            ctx.font = '500 17px ' + FAMILY;
-            ctx.fillText('—', cx, y + ROW_H / 2 + 6);
+            ctx.fillStyle = '#c4c9d2';
+            ctx.font = '400 18.5px ' + FAMILY;
+            ctx.fillText('—', cx, cy + 7);
             return;
           }
           names.forEach(function (name, ni) {
-            const ny = y + ROW_H / 2 + (ni - (names.length - 1) / 2) * LINE_H + 6;
-            fitFont(ctx, name, maxW, 18.5, '600', FAMILY);
-            ctx.fillStyle = '#1e293b';
+            const ny = cy + (ni - (names.length - 1) / 2) * LINE_H + 1;
+            fitFont(ctx, name, maxW, 18.5, '400', FAMILY);
+            ctx.fillStyle = '#111827';
             ctx.fillText(name, cx, ny);
           });
         });
 
-        ctx.strokeStyle = '#eef2f7';
-        ctx.lineWidth = 1;
-        for (let i = 1; i < colX.length - 1; i++) {
-          ctx.beginPath();
-          ctx.moveTo(colX[i], y);
-          ctx.lineTo(colX[i], y + ROW_H);
-          ctx.stroke();
-        }
-        ctx.strokeStyle = '#eef2f7';
-        ctx.beginPath();
-        ctx.moveTo(x0, y + ROW_H);
-        ctx.lineTo(x0 + TABLE_W, y + ROW_H);
-        ctx.stroke();
-
-        y += ROW_H;
         rowIndex++;
+        if (rowIndex < totalRows) {
+          ctx.fillStyle = '#f2f3f5';
+          ctx.fillRect(x0, y + ROW_H - 1, TABLE_W, 1);
+        }
+        y += ROW_H;
       });
     });
 
-    ctx.strokeStyle = '#eef2f7';
-    ctx.beginPath();
-    ctx.moveTo(x0, footerTop);
-    ctx.lineTo(x0 + TABLE_W, footerTop);
-    ctx.stroke();
-
-    const notes = (state.notes[state.month] || '').trim();
-    if (notes) {
+    if (FOOT_H) {
+      ctx.fillStyle = '#f2f3f5';
+      ctx.fillRect(x0, y, TABLE_W, 1);
       ctx.textAlign = 'left';
-      ctx.fillStyle = '#64748b';
-      ctx.font = '500 15px ' + FAMILY;
-      ctx.fillText(ellipsize(ctx, notes, TABLE_W - 240), x0, footerTop + 34);
+      ctx.fillStyle = '#6b7280';
+      ctx.font = '400 15.5px ' + FAMILY;
+      ctx.fillText(ellipsize(ctx, notes, TABLE_W), x0, y + 38);
     }
 
-    ctx.textAlign = 'right';
-    ctx.fillStyle = '#9aa8ba';
-    ctx.font = '500 12.5px ' + FAMILY;
-    ctx.fillText('Generado el ' + todayLabel(), x0 + TABLE_W, footerTop + 34);
+    ctx.restore();
+
+    ctx.strokeStyle = '#eceef2';
+    ctx.lineWidth = 1;
+    roundRect(ctx, PAD + 0.5, PAD + 0.5, CARD_W - 1, cardH - 1, 16);
+    ctx.stroke();
 
     const filename = 'programa-' + state.month + '.jpg';
     canvas.toBlob(function (blob) {
