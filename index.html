@@ -401,6 +401,17 @@ details.help li{margin-bottom:4px}
             Incluir semanas ya pasadas
           </label>
         </div>
+        <div class="field">
+          <label for="day1Sel">Día de reunión 1</label>
+          <select id="day1Sel"></select>
+          <input type="text" id="day1Name" placeholder="Nombre" maxlength="20">
+        </div>
+        <div class="field">
+          <label for="day2Sel">Día de reunión 2</label>
+          <select id="day2Sel"></select>
+          <input type="text" id="day2Name" placeholder="Nombre" maxlength="20">
+        </div>
+        <p class="hint">Elegí los días de la semana en que se reúnen. Al cambiarlo se regenera el mes.</p>
       </section>
 
       <details class="panel" id="peoplePanel">
@@ -512,13 +523,18 @@ details.help li{margin-bottom:4px}
 
   // La clave interna 'sat' se mantiene igual a propósito: así los meses ya
   // guardados en el navegador se siguen leyendo aunque ahora la reunión sea el domingo.
-  const MEETINGS = [
-    { key: 'thu', name: 'Jueves', offset: 0 },
-    { key: 'sat', name: 'Domingo', offset: 3 }
-  ];
+  const WEEKDAYS = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
 
   const MONTHS = ['enero','febrero','marzo','abril','mayo','junio','julio',
                   'agosto','septiembre','octubre','noviembre','diciembre'];
+
+  // Días de reunión configurables. La clave interna se mantiene para leer
+  // semanas ya guardadas; el weekday (0=domingo…6=sábado) y el nombre se
+  // pueden cambiar desde Ajustes.
+  const DEFAULT_MEETING_DAYS = [
+    { key: 'thu', name: 'Jueves',   weekday: 4 },
+    { key: 'sat', name: 'Domingo',  weekday: 0 }
+  ];
   const STORE = 'programa-reuniones-v2';
   // La clave de guardado NO se cambia entre versiones del archivo: así los
   // datos que ya están en el navegador se siguen leyendo al abrir el HTML nuevo.
@@ -547,6 +563,15 @@ details.help li{margin-bottom:4px}
     const x = new Date(d.getFullYear(), d.getMonth(), d.getDate());
     x.setDate(x.getDate() + n);
     return x;
+  }
+  // Días desde el jueves (día de referencia de la semana) hasta el weekday dado
+  // (0=domingo…6=sábado), siempre hacia adelante dentro de la semana del jueves.
+  function weekdayOffset(weekday) {
+    return (weekday - 4 + 7) % 7;
+  }
+  function meetingLabel(key) {
+    const d = state.meetingDays.find(function (m) { return m.key === key; });
+    return d ? d.name : key;
   }
   function mondayOf(d) { return addDays(d, -((d.getDay() + 6) % 7)); }
   function thursdayOf(d) { return addDays(mondayOf(d), 3); }
@@ -608,7 +633,8 @@ details.help li{margin-bottom:4px}
       unavailable: {},
       manual: {},
       seeds: {},
-      notes: {}
+      notes: {},
+      meetingDays: DEFAULT_MEETING_DAYS.map(function (d) { return Object.assign({}, d); })
     };
   }
 
@@ -624,6 +650,9 @@ details.help li{margin-bottom:4px}
     state.manual = (saved && saved.manual) || {};
     state.seeds = (saved && saved.seeds) || {};
     state.notes = (saved && saved.notes) || {};
+    state.meetingDays = (saved && saved.meetingDays)
+      ? saved.meetingDays.map(function (d) { return Object.assign({}, d); })
+      : DEFAULT_MEETING_DAYS.map(function (d) { return Object.assign({}, d); });
     if (!/^\d{4}-\d{2}$/.test(state.month)) state.month = monthKeyOf(TODAY);
   }
 
@@ -664,6 +693,28 @@ details.help li{margin-bottom:4px}
         'Descargá una copia antes de salir.';
       el.style.color = '#9a3412';
     }
+  }
+
+  function initDaySettings() {
+    WEEKDAYS.forEach(function (name, i) {
+      var opt = document.createElement('option');
+      opt.value = String(i);
+      opt.textContent = name;
+      $('#day1Sel').appendChild(opt);
+      var opt2 = document.createElement('option');
+      opt2.value = String(i);
+      opt2.textContent = name;
+      $('#day2Sel').appendChild(opt2);
+    });
+  }
+
+  function renderDaySettings() {
+    var d1 = state.meetingDays[0] || {};
+    var d2 = state.meetingDays[1] || {};
+    $('#day1Sel').value = String(d1.weekday !== undefined ? d1.weekday : 4);
+    $('#day1Name').value = d1.name || '';
+    $('#day2Sel').value = String(d2.weekday !== undefined ? d2.weekday : 0);
+    $('#day2Name').value = d2.name || '';
   }
 
   function downloadFile(name, blob) {
@@ -1015,12 +1066,12 @@ details.help li{margin-bottom:4px}
     const counts = new Map();
     const roleCounts = new Map();
 
-    const sched = {
-      thu: { S: [], M: [], P: [], A: [] },
-      sat: { S: [], M: [], P: [], A: [] }
-    };
+    const sched = {};
+    state.meetingDays.forEach(function (m) {
+      sched[m.key] = { S: [], M: [], P: [], A: [] };
+    });
 
-    MEETINGS.forEach(function (m) {
+    state.meetingDays.forEach(function (m) {
       const used = new Set();
       ['S', 'P', 'A', 'M'].forEach(function (role) {
         const need = role === 'A' ? state.ushers : ROLE_COUNT[role];
@@ -1040,20 +1091,20 @@ details.help li{margin-bottom:4px}
     return sched;
   }
 
-  /* Mes nuevo: casilleros vacíos, sin asignaciones. Los nombres ya están,
-     pero nadie queda asignado hasta tocar «Generar mes» o elegir a mano. */
+  /* Mes nuevo: casilleros vacíos, sin asignaciones. */
   function blankWeek() {
-    return {
-      thu: { S: [], M: [], P: [], A: [] },
-      sat: { S: [], M: [], P: [], A: [] }
-    };
+    const sched = {};
+    state.meetingDays.forEach(function (m) {
+      sched[m.key] = { S: [], M: [], P: [], A: [] };
+    });
+    return sched;
   }
 
   function ensureMonth() {
     displayedWeeks().forEach(function (k) {
       const sched = state.weeks[k];
       if (!sched) { state.weeks[k] = blankWeek(); return; }
-      MEETINGS.forEach(function (m) {
+      state.meetingDays.forEach(function (m) {
         if (!sched[m.key]) sched[m.key] = { S: [], M: [], P: [], A: [] };
         ROLE_KEYS.forEach(function (r) {
           const need = r === 'A' ? state.ushers : ROLE_COUNT[r];
@@ -1120,7 +1171,7 @@ details.help li{margin-bottom:4px}
     sel.dataset.index = String(index);
     const roleLabel = ROLES.filter(function (r) { return r.key === role; })[0].label;
     sel.setAttribute('aria-label', roleLabel + ' ' + weekKey + ' ' +
-      (meetingKey === 'thu' ? 'jueves' : 'domingo') + ' ' + (index + 1));
+      meetingLabel(meetingKey) + ' ' + (index + 1));
     sel.appendChild(buildOptions(role, value));
     sel.value = value || '';
     sel.addEventListener('change', onSlotChange);
@@ -1144,8 +1195,8 @@ details.help li{margin-bottom:4px}
       group.appendChild(gth);
       tbody.appendChild(group);
 
-      MEETINGS.forEach(function (m) {
-        const date = addDays(thu, m.offset);
+      state.meetingDays.forEach(function (m) {
+        const date = addDays(thu, m.offset !== undefined ? m.offset : weekdayOffset(m.weekday));
         const tr = document.createElement('tr');
 
         const th = document.createElement('th');
@@ -1299,7 +1350,7 @@ details.help li{margin-bottom:4px}
       const sched = state.weeks[weekKey];
       if (!sched) return;
       const label = weekRangeLabel(weekKey).replace('Semana del ', '');
-      MEETINGS.forEach(function (m) {
+      state.meetingDays.forEach(function (m) {
         const seen = new Map();
         ROLES.forEach(function (role) {
           (sched[m.key][role.key] || []).forEach(function (n) {
@@ -1357,6 +1408,7 @@ details.help li{margin-bottom:4px}
     $('#ushersSel').value = String(state.ushers);
     $('#eldersChk').checked = !!state.eldersReplace;
     $('#pastChk').checked = !!state.showPast;
+    renderDaySettings();
     renderStoreHint();
   }
 
@@ -1437,7 +1489,7 @@ details.help li{margin-bottom:4px}
     if (oldName) {
       Object.keys(state.weeks).forEach(function (w) {
         const sc = state.weeks[w];
-        MEETINGS.forEach(function (m) {
+        state.meetingDays.forEach(function (m) {
           ROLE_KEYS.forEach(function (r) {
             sc[m.key][r] = (sc[m.key][r] || []).map(function (n) {
               return n === oldName ? newName : n;
@@ -1470,7 +1522,7 @@ details.help li{margin-bottom:4px}
         skills = skills.replace(role, '');
         Object.keys(state.weeks).forEach(function (w) {
           const sc = state.weeks[w];
-          MEETINGS.forEach(function (m) {
+          state.meetingDays.forEach(function (m) {
             sc[m.key][role] = (sc[m.key][role] || []).map(function (n) {
               return n === person.name ? '' : n;
             });
@@ -1496,7 +1548,7 @@ details.help li{margin-bottom:4px}
       if (person.name) {
         Object.keys(state.weeks).forEach(function (w) {
           const sc = state.weeks[w];
-          MEETINGS.forEach(function (m) {
+          state.meetingDays.forEach(function (m) {
             ROLE_KEYS.forEach(function (r) {
               sc[m.key][r] = (sc[m.key][r] || []).map(function (n) {
                 return n === person.name ? '' : n;
@@ -1531,6 +1583,7 @@ details.help li{margin-bottom:4px}
   }
 
   function bindEvents() {
+    initDaySettings();
     $('#prevBtn').addEventListener('click', function () { shiftMonth(-1); });
     $('#nextBtn').addEventListener('click', function () { shiftMonth(1); });
     $('#monthInput').addEventListener('change', function (ev) {
@@ -1574,6 +1627,27 @@ details.help li{margin-bottom:4px}
       ensureMonth();
       save();
       render();
+    });
+    function applyDayChange(idx, field, value) {
+      var md = state.meetingDays[idx];
+      if (!md) return;
+      if (field === 'weekday') md.weekday = Number(value);
+      if (field === 'name') md.name = value;
+      regenerateMonth(false);
+      save();
+      render();
+    }
+    $('#day1Sel').addEventListener('change', function (ev) {
+      applyDayChange(0, 'weekday', ev.target.value);
+    });
+    $('#day1Name').addEventListener('change', function (ev) {
+      applyDayChange(0, 'name', ev.target.value);
+    });
+    $('#day2Sel').addEventListener('change', function (ev) {
+      applyDayChange(1, 'weekday', ev.target.value);
+    });
+    $('#day2Name').addEventListener('change', function (ev) {
+      applyDayChange(1, 'name', ev.target.value);
     });
     $('#rosterBody').addEventListener('change', onRosterName);
     $('#rosterBody').addEventListener('click', onRosterClick);
@@ -1743,7 +1817,7 @@ details.help li{margin-bottom:4px}
 
     let y = tableTop + THEAD_H;
     let rowIndex = 0;
-    const totalRows = weeks.length * MEETINGS.length;
+    const totalRows = weeks.length * state.meetingDays.length;
 
     weeks.forEach(function (weekKey) {
       const sched = state.weeks[weekKey];
@@ -1758,7 +1832,7 @@ details.help li{margin-bottom:4px}
       ctx.fillRect(PAD, y + BAND_H - 1, CARD_W, 1);
       y += BAND_H;
 
-      MEETINGS.forEach(function (m) {
+      state.meetingDays.forEach(function (m) {
         const cy = y + ROW_H / 2;
         const date = addDays(parseYMD(weekKey), m.offset);
 
