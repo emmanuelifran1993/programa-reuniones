@@ -1804,7 +1804,7 @@ details.help li{margin-bottom:4px}
 
     ROLES.forEach(function (role, i) {
       const cx = colX[i + 1] + COLS[i + 1] / 2;
-      ctx.fillStyle = role.color;
+      ctx.fillStyle = '#111827';
       ctx.font = '700 14.5px ' + FAMILY;
       drawTracked(ctx, role.label.toUpperCase(), cx, tableTop + 40, 0.9, 'center');
     });
